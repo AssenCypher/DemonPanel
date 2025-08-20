@@ -20,13 +20,13 @@ namespace DemonShop.Editor
         private static bool _hasMLP, _hasLV, _hasLVManager, _hasUdonSharp;
         private static double _nextCopyTime;
 
-        // NOTE: --- 小工具：首行提示 + 刷新按钮，窄时自动“换到下一行” ---  — translated; if this looks odd, blame past-me and IMGUI.
+        // --- 小工具：首行提示 + 刷新按钮，窄时自动“换到下一行” ---
         private static void DrawIntroWithRefresh()
         {
             const float kButtonWidth = 80f;
-            float width = EditorGUIUtility.currentViewWidth; // NOTE: 当前可用宽度  — translated; if this looks odd, blame past-me and IMGUI.
+            float width = EditorGUIUtility.currentViewWidth; // 当前可用宽度
 
-            // NOTE: 估个阈值：够宽时并排，不够宽时分两行  — translated; if this looks odd, blame past-me and IMGUI.
+            // 估个阈值：够宽时并排，不够宽时分两行
             bool narrow = width < 520f;
 
             if (!narrow)
@@ -44,9 +44,9 @@ namespace DemonShop.Editor
             }
             else
             {
-                // NOTE: 第一行：提示  — translated; if this looks odd, blame past-me and IMGUI.
+                // 第一行：提示
                 EditorGUILayout.HelpBox(DP_Loc.T("probeIntro"), MessageType.None);
-                // NOTE: 第二行：刷新按钮  — translated; if this looks odd, blame past-me and IMGUI.
+                // 第二行：刷新按钮
                 using (new EditorGUI.DisabledScope(DP_PackageDetector.IsScanning))
                 {
                     using (new EditorGUILayout.HorizontalScope())
@@ -72,7 +72,7 @@ namespace DemonShop.Editor
                 _hasUdonSharp = DP_PackageDetector.HasUdonSharp;
             }
 
-            // NOTE: 顶部介绍 + 刷新（支持窄屏换行）  — translated; if this looks odd, blame past-me and IMGUI.
+            // 顶部介绍 + 刷新（支持窄屏换行）
             DrawIntroWithRefresh();
 
             EditorGUILayout.LabelField(
@@ -106,8 +106,8 @@ namespace DemonShop.Editor
             if (GUILayout.Button(DP_Loc.T("generate"), GUILayout.Height(26)))
                 GenerateForSelection();
 
-            // NOTE: —— 按你的要求：从 Probes 页移除 VRCLV 安装入口（保持页面纯净）——  — translated; if this looks odd, blame past-me and IMGUI.
-            // NOTE: （原来这里有一个 using (new EditorGUI.DisabledScope(_hasLV)) { Install LV } 的块，已删除）  — translated; if this looks odd, blame past-me and IMGUI.
+            // —— 按你的要求：从 Probes 页移除 VRCLV 安装入口（保持页面纯净）——
+            // （原来这里有一个 using (new EditorGUI.DisabledScope(_hasLV)) { Install LV } 的块，已删除）
         }
 
         public static void DrawIntegrationBlock()

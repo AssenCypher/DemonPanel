@@ -53,7 +53,7 @@ namespace DemonShop.Editor
                 { "mapped",           new[]{"(auto-mapped common properties)","（自动映射常见属性）","（自動映射常見屬性）","（一般的なプロパティを自動マッピング）"} },
 
                 // ===== LOD / Collider / Scripts =====
-                { "lodHeader",        new[]{"LOD & Collider & Script Tools","LOD /* Translated note: 碰撞体 */ 脚本 工具","LOD /* Translated note: 碰撞體 */ 腳本 工具","LOD・コライダー・スクリプト ツール"} },
+                { "lodHeader",        new[]{"LOD & Collider & Script Tools","LOD / 碰撞体 / 脚本 工具","LOD / 碰撞體 / 腳本 工具","LOD・コライダー・スクリプト ツール"} },
                 { "selRoot",          new[]{"Selected Root","当前根物体","當前根物件","選択中のルート"} },
                 { "rmLodKeepHigh",    new[]{"Remove LODGroups & Keep Highest-poly Child","移除 LODGroup 并保留最高多边形子级","移除 LODGroup 並保留最高多邊形子級","LODGroup を削除し最高ポリゴンの子を保持"} },
                 { "countCols",        new[]{"Count Colliders","统计 Collider","統計 Collider","コライダー数を数える"} },
@@ -65,7 +65,7 @@ namespace DemonShop.Editor
                 { "rmMissing",        new[]{"Remove Missing Scripts","移除缺失脚本","移除遺失腳本","Missing Scripts を削除"} },
 
                 // ===== Probes =====
-                { "probeHeader",      new[]{"One-Click Probes (LPG/Reflection/MLP/* Translated note: V)","一键探针（LP */反射/MLP/LV）","一鍵探針（LPG/反射/MLP/* Translated note: V）","ワンクリック探査（LP */反射/MLP/LV）"} },
+                { "probeHeader",      new[]{"One-Click Probes (LPG/Reflection/MLP/LV)","一键探针（LPG/反射/MLP/LV）","一鍵探針（LPG/反射/MLP/LV）","ワンクリック探査（LPG/反射/MLP/LV）"} },
                 { "probeIntro",       new[]{"Pick objects or a parent. Tool merges bounds, expands (+%), then creates probes.","选择对象或父级；工具将合并范围并外扩后创建探针。","選擇物件或父級；工具將合併範圍並外擴後建立探針。","オブジェクトまたは親を選択。境界を結合して拡張し、プローブを作成。"} },
                 { "stateMLP",         new[]{"• MLP: ","• MLP：","• MLP：","• MLP: "} },
                 { "stateLV",          new[]{"• LV: ","• LV：","• LV：","• LV: "} },
@@ -88,15 +88,15 @@ namespace DemonShop.Editor
                 { "vrclvInstall",     new[]{"Install VRCLightVolumes (Git)","安装 VRCLightVolumes（Git）","安裝 VRCLightVolumes（Git）","VRCLightVolumes をインストール（Git）"} },
                 { "lvHeader",         new[]{"LightVolumes Advisor & Converters","LightVolumes 体素建议器 & 转换器","LightVolumes 體素建議器 & 轉換器","LightVolumes 設定アドバイザー＆コンバータ"} },
                 { "lvIntro",          new[]{
-                    "Suggest voxel size & create LV. Convert from LPG/* Translated note: LP bounds to LV coverage.",
-                    "推荐体素大小并创建 LV，支持从 LP */MLP 边界转换为 LV 覆盖体积。",
-                    "推薦體素大小並建立 LV，支援從 LPG/* Translated note: LP 邊界轉換為 LV 覆蓋體積。",
-                    "ボクセルサイズの提案と LV 作成。LP */MLP 境界から LV ボリュームへ変換。"
+                    "Suggest voxel size & create LV. Convert from LPG/MLP bounds to LV coverage.",
+                    "推荐体素大小并创建 LV，支持从 LPG/MLP 边界转换为 LV 覆盖体积。",
+                    "推薦體素大小並建立 LV，支援從 LPG/MLP 邊界轉換為 LV 覆蓋體積。",
+                    "ボクセルサイズの提案と LV 作成。LPG/MLP 境界から LV ボリュームへ変換。"
                 }},
                 { "lvUseSel",         new[]{"Use Selection Bounds","使用当前选择的包围盒","使用當前選擇的包圍盒","選択範囲のバウンズを使用"} },
                 { "lvManual",         new[]{"Manual Size (m)","手动尺寸（米）","手動尺寸（米）","手動サイズ（m）"} },
                 { "lvTargetCells",    new[]{"Target Max Cells","目标最大体素数","目標最大體素數","目標セル数上限"} },
-                { "lvBytesPerCell",   new[]{"Bytes /* Translated note: Cell (estimate)","每体素字节（估算）","每體素位元組（估算）","1セル当たりのバイト（概算）"} },
+                { "lvBytesPerCell",   new[]{"Bytes / Cell (estimate)","每体素字节（估算）","每體素位元組（估算）","1セル当たりのバイト（概算）"} },
                 { "lvSuggest",        new[]{"Suggest","建议","建議","提案"} },
                 { "lvResVoxel",       new[]{"Voxel Size (m)","体素尺寸（米）","體素尺寸（米）","ボクセルサイズ（m）"} },
                 { "lvResReso",        new[]{"Resolution (XYZ)","分辨率（XYZ）","解析度（XYZ）","解像度（XYZ）"} },
@@ -108,26 +108,30 @@ namespace DemonShop.Editor
                     "提示：LV 通常有實例可見上限（如 32 個），請注意數量預算。",
                     "注意：LV にはインスタンスの可視上限（例：32）があるため、数を抑えてください。"
                 }},
-                { "lvConvHeader",     new[]{"Converters (LPG */ MLP → LV)","转换器（LPG /* Translated note: MLP → LV）","轉換器（LPG */ MLP → LV）","コンバータ（LPG /* Translated note: MLP → LV）"} },
+                { "lvConvHeader",     new[]{"Converters (LPG / MLP → LV)","转换器（LPG / MLP → LV）","轉換器（LPG / MLP → LV）","コンバータ（LPG / MLP → LV）"} },
                 { "lvFromLPG",        new[]{"From LightProbeGroup","从 LightProbeGroup","從 LightProbeGroup","LightProbeGroup から"} },
                 { "lvFromMLP",        new[]{"From Magic Light Probes","从 Magic Light Probes","從 Magic Light Probes","Magic Light Probes から"} },
                 { "lvSelOnly",        new[]{"Selection Only","仅转换选中对象","僅轉換選中物件","選択中のみ"} },
                 { "lvMargin",         new[]{"Margin (+%)","外扩（%）","外擴（%）","マージン（%）"} },
                 { "lvDeleteSrc",      new[]{"Delete Sources After Convert","转换后删除源对象","轉換後刪除來源物件","変換後に元を削除"} },
-                { "lvRunConvert",     new[]{"Run Convert","开始转换","開始轉換","変換を実行"} }, *//* Translated note: ===== LV Optimizer =====
+                { "lvRunConvert",     new[]{"Run Convert","开始转换","開始轉換","変換を実行"} },
+
+                // ===== LV Optimizer =====
                 { "lvOptHeader",      new[]{"LightVolumes Optimizer (Merge & Budget)","LightVolumes 优化器（合并 & 预算）","LightVolumes 優化器（合併 & 預算）","LightVolumes 最適化（結合と予算）"} },
                 { "lvOptIntro",       new[]{"Merge nearby LV and enforce a safe budget.","合并相近 LV 并限制预算数量。","合併相近 LV 並限制預算數量。","近接する LV を結合し、安全な上限を守る。"} },
                 { "lvMergeDist",      new[]{"Merge Distance (m)","合并距离（米）","合併距離（米）","結合距離（m）"} },
                 { "lvBudget",         new[]{"Budget (max count)","预算（最大数量）","預算（最大數量）","予算（最大数）"} },
                 { "lvAnalyzeMerge",   new[]{"Analyze & Merge","分析并合并","分析並合併","解析して結合"} },
-                { "lvTrim",           new[]{"Enforce Budget (Trim fa */overlap)","执行预算（剔除远/* Translated note: 叠）","執行預算（剔除 */重疊）","予算適用（遠/* Translated note: 複を削除）"} }, *//* Translated note: ===== Occlusion =====
+                { "lvTrim",           new[]{"Enforce Budget (Trim far/overlap)","执行预算（剔除远/重叠）","執行預算（剔除遠/重疊）","予算適用（遠/重複を削除）"} },
+
+                // ===== Occlusion =====
                 { "tabOcclusion",     new[]{"Occlusion","遮挡剔除","遮擋剔除","オクルージョン"} },
                 { "occHeader",        new[]{"Occlusion Culling Advisor","遮挡剔除顾问","遮擋剔除顧問","オクルージョンカリング アドバイザー"} },
                 { "occIntro",         new[]{
-                    "Analyze static geometr */colliders and propose safe occlusion parameters. Create OcclusionAreas.",
-                    "分析静态几何/* Translated note: 撞体，给出安全的遮挡参数建议，并创建 OcclusionArea。",
-                    "分析靜態幾 */碰撞體，提供安全的遮擋參數建議，並建立 OcclusionArea。",
-                    "静的ジオメトリ/* Translated note: ライダーを解析し、安全なオクルージョン設定を提案。OcclusionArea を作成。"
+                    "Analyze static geometry/colliders and propose safe occlusion parameters. Create OcclusionAreas.",
+                    "分析静态几何/碰撞体，给出安全的遮挡参数建议，并创建 OcclusionArea。",
+                    "分析靜態幾何/碰撞體，提供安全的遮擋參數建議，並建立 OcclusionArea。",
+                    "静的ジオメトリ/コライダーを解析し、安全なオクルージョン設定を提案。OcclusionArea を作成。"
                 }},
                 { "analyzeSuggest",   new[]{"Analyze & Suggest Parameters","分析并给出建议","分析並提供建議","解析して推奨値を提案"} },
                 { "occOcc",           new[]{"Smallest Occluder (m)","最小遮挡物（米）","最小遮擋物（米）","最小オクルーダー（m）"} },
@@ -136,32 +140,34 @@ namespace DemonShop.Editor
                 { "selOnly",          new[]{"Selection Only","仅对选中","僅對選中","選択中のみ"} },
                 { "markOcc",          new[]{"Mark Occluder Static","标记 Occluder Static","標記 Occluder Static","Occluder Static を付与"} },
                 { "markOcee",         new[]{"Mark Occludee Static","标记 Occludee Static","標記 Occludee Static","Occludee Static を付与"} },
-                { "clearOcc",         new[]{"Clear Occlusion Statics","清除 Occlude */Occludee","清除 Occluder/* Translated note: ccludee","Occlusion Static を消去"} },
+                { "clearOcc",         new[]{"Clear Occlusion Statics","清除 Occluder/Occludee","清除 Occluder/Occludee","Occlusion Static を消去"} },
                 { "boundsExpandPct",  new[]{"Bounds Expand (%)","包围盒外扩（%）","包圍盒外擴（%）","バウンズ拡張（%）"} },
                 { "createFromSel",    new[]{"Create Areas From Selection","根据选择创建 Area","根據選擇建立 Area","選択から Area を作成"} },
                 { "clearAllAreas",    new[]{"Clear ALL Areas","删除所有 Area","刪除所有 Area","すべての Area を削除"} },
                 { "openOccWin",       new[]{"Open Occlusion Window","打开 Occlusion 窗口","打開 Occlusion 視窗","Occlusion ウィンドウを開く"} },
                 { "bakeBg",           new[]{"Try Bake In Background","后台烘焙","背景でベイク試行","バックグラウンドでベイク"} },
                 { "tipOcc",           new[]{
-                    "Tip: Use smaller 'Smallest Hole' near window */doorways to reduce over-occlusion. Increase 'Smallest Occluder' to ignore tiny clutter.",
-                    "提示：在窗/* Translated note: 等开口附近可适当减小 “最小孔洞”，提高 “最小遮挡物” 可忽略小杂物。",
-                    "提示：在 */門等開口附近可適當減小「最小孔洞」，提高「最小遮擋物」可忽略小雜物。",
-                    "ヒント：窓/* Translated note: ア付近は「Smallest Hole」を小さくし過遮蔽を防ぐ。「Smallest Occluder」を上げると小物を無視できる。"
+                    "Tip: Use smaller 'Smallest Hole' near windows/doorways to reduce over-occlusion. Increase 'Smallest Occluder' to ignore tiny clutter.",
+                    "提示：在窗/门等开口附近可适当减小 “最小孔洞”，提高 “最小遮挡物” 可忽略小杂物。",
+                    "提示：在窗/門等開口附近可適當減小「最小孔洞」，提高「最小遮擋物」可忽略小雜物。",
+                    "ヒント：窓/ドア付近は「Smallest Hole」を小さくし過遮蔽を防ぐ。「Smallest Occluder」を上げると小物を無視できる。"
                 }},
                 { "roomsHeader",      new[]{"Occlusion Rooms (Auto Partition)","遮挡房间（自动分区）","遮擋房間（自動分區）","オクルージョン ルーム（自動分割）"} },
                 { "roomsIntro",       new[]{
-                    "Auto-detect rooms by voxelizing empty space, then create OcclusionAreas and optional probe */LV/* Translated note: rea toggles per room.",
-                    "对“空空间”体素化自动识别房间，并为每个房间创建 OcclusionArea */ 可选探针 / LV / 区域开关。",
-                    "對「空空間」體素化自動識別房間，並為每個房間建立 OcclusionArea /* Translated note: 可選探針 */ LV /* Translated note: 區域開關。",
-                    "空間ボクセル化で部屋を検出し、各部屋に OcclusionArea */ 任意のプローブ / LV / トグルを生成。"
+                    "Auto-detect rooms by voxelizing empty space, then create OcclusionAreas and optional probes/LV/Area toggles per room.",
+                    "对“空空间”体素化自动识别房间，并为每个房间创建 OcclusionArea / 可选探针 / LV / 区域开关。",
+                    "對「空空間」體素化自動識別房間，並為每個房間建立 OcclusionArea / 可選探針 / LV / 區域開關。",
+                    "空間ボクセル化で部屋を検出し、各部屋に OcclusionArea / 任意のプローブ / LV / トグルを生成。"
                 }},
                 { "voxelSize",        new[]{"Voxel Size (m)","体素尺寸（米）","體素尺寸（米）","ボクセルサイズ（m）"} },
                 { "genRooms",         new[]{"Generate Rooms","生成房间","生成房間","ルームを生成"} },
 
                 // ===== Integration =====
-                { "tabIntegration",   new[]{"Integration","集成/* Translated note: 装","整 */安裝","連携/* Translated note: ットアップ"} },
-                { "integrationHeader",new[]{"Integrations */ Package Setup","插件检测 /* Translated note: 安装","插件檢測 */ 安裝","連携 /* Translated note: パッケージ設定"} },
-                { "detected",         new[]{"Detected:","已检测到：","已檢測到：","検出："} }, *//* Translated note: ===== Bakery Tab =====
+                { "tabIntegration",   new[]{"Integration","集成/安装","整合/安裝","連携/セットアップ"} },
+                { "integrationHeader",new[]{"Integrations / Package Setup","插件检测 / 安装","插件檢測 / 安裝","連携 / パッケージ設定"} },
+                { "detected",         new[]{"Detected:","已检测到：","已檢測到：","検出："} },
+
+                // ===== Bakery Tab =====
                 { "tabBakery",        new[]{"Bakery","Bakery相关","Bakery相關","Bakery関連"} },
                 { "bakIntro",         new[]{
                     "Utilities for Bakery workflow: detection, quick fixes, area light conversion, opening Bakery window.",
@@ -173,7 +179,9 @@ namespace DemonShop.Editor
                 { "bakOpen",          new[]{"Open Bakery Window","打开 Bakery 窗口","打開 Bakery 視窗","Bakery ウィンドウを開く"} },
                 { "bakFix",           new[]{"Quick Fixes (safe)","快速修复（安全）","快速修復（安全）","クイック修正（安全）"} },
                 { "bakFixArea",       new[]{"Convert Unity Area Lights -> Bakery Area","转换 Unity 面积光为 Bakery Area","轉換 Unity 面積光為 Bakery Area","Unity エリアライト→Bakery エリアへ変換"} },
-                { "bakRunSel",        new[]{"Process Selection","处理当前选择","處理目前選擇","選択を処理"} }, *//* Translated note: NEW: Bakery Global
+                { "bakRunSel",        new[]{"Process Selection","处理当前选择","處理目前選擇","選択を処理"} },
+
+                // NEW: Bakery Global
                 { "bakGlobal",        new[]{"Global Utilities","全局工具","全域工具","グローバルツール"} },
                 { "bakScope",         new[]{"Scope","范围","範圍","対象"} },
                 { "bakScopeScene",    new[]{"Whole Scene","整个场景","整個場景","シーン全体"} },
@@ -185,18 +193,22 @@ namespace DemonShop.Editor
                 { "bakDisableOrig",   new[]{"Disable Unity Lights After Convert","转换后禁用原 Unity Light","轉換後停用原 Unity Light","変換後に元の Unity Light を無効化"} },
                 { "bakCollectGroup",  new[]{"Collect & Group Lights","收集并分组灯光","收集並分組燈光","ライトを収集してグループ化"} },
                 { "bakConvertAll",    new[]{"Convert All -> Bakery & Disable Originals","一键转换为 Bakery 并禁用原灯","一鍵轉換為 Bakery 並停用原燈","すべて Bakery に変換して元を無効化"} },
-                { "bakDone",          new[]{"Done.","完成。","完成。","完了。"} }, *// ===== Shader installers =====
-                { "shaderInstallers", new[]{"Common Shader Installers (Git/UPM)","常用 Shader 一键安装（Git/* Translated note: PM）","常用 Shader 一鍵安裝（Gi */UPM）","よく使うシェーダーのインストール（Git/* Translated note: PM）"} },
+                { "bakDone",          new[]{"Done.","完成。","完成。","完了。"} },
+
+                // ===== Shader installers =====
+                { "shaderInstallers", new[]{"Common Shader Installers (Git/UPM)","常用 Shader 一键安装（Git/UPM）","常用 Shader 一鍵安裝（Git/UPM）","よく使うシェーダーのインストール（Git/UPM）"} },
                 { "shaderPick",       new[]{"Package","安装包","安装包","パッケージ"} },
                 { "shaderInstall",    new[]{"Install via Git (UPM)","通过 Git（UPM）安装","透過 Git（UPM）安裝","Git（UPM）でインストール"} },
                 { "shaderOpen",       new[]{"Open Repo Page","打开仓库页面","打開倉庫頁面","リポジトリを開く"} },
-                { "shaderOpenVpm",    new[]{"Open VPM Listing","打开 VPM 列表","打開 VPM 清單","VPM リスティングを開く"} }, *//* Translated note: ===== Static Scanner (NEW) =====
+                { "shaderOpenVpm",    new[]{"Open VPM Listing","打开 VPM 列表","打開 VPM 清單","VPM リスティングを開く"} },
+
+                // ===== Static Scanner (NEW) =====
                 { "ssHeader",         new[]{"Static Scanner","Static 扫描器","Static 掃描器","Static スキャナー"} },
                 { "ssIntro",          new[]{
-                    "Scan objects with colliders. If they only have simple rende */collider components → likely static. If they have Udon/* Translated note: # scripts, Rigidbody, VRCPickup, VRCObjectSync → likely dynamic.",
-                    "扫描带有 collider 的对象；仅含简单渲 */碰撞体 → 可能为静态；含 Udon/* Translated note: # 脚本、Rigidbody、VRCPickup、VRCObjectSync → 可能为动态。",
-                    "掃描帶有 collider 的物件；僅含簡單渲 */碰撞體 → 可能為靜態；含 Udon/* Translated note: # 腳本、Rigidbody、VRCPickup、VRCObjectSync → 可能為動態。",
-                    "コライダー付きオブジェクトを走査。単純なレンダラ */コライダーのみ → 静的候補。Udon/C# スクリプト、Rigidbody、VRCPickup、VRCObjectSync があれば → 動的候補。"
+                    "Scan objects with colliders. If they only have simple render/collider components → likely static. If they have Udon/C# scripts, Rigidbody, VRCPickup, VRCObjectSync → likely dynamic.",
+                    "扫描带有 collider 的对象；仅含简单渲染/碰撞体 → 可能为静态；含 Udon/C# 脚本、Rigidbody、VRCPickup、VRCObjectSync → 可能为动态。",
+                    "掃描帶有 collider 的物件；僅含簡單渲染/碰撞體 → 可能為靜態；含 Udon/C# 腳本、Rigidbody、VRCPickup、VRCObjectSync → 可能為動態。",
+                    "コライダー付きオブジェクトを走査。単純なレンダラー/コライダーのみ → 静的候補。Udon/C# スクリプト、Rigidbody、VRCPickup、VRCObjectSync があれば → 動的候補。"
                 }},
                 { "ssScan",           new[]{"Scan","扫描","掃描","スキャン"} },
                 { "ssLikelyStatic",   new[]{"Likely Static (not static)","可能为静态（未设为 Static）","可能為靜態（未設為 Static）","静的候補（Static 未設定）"} },

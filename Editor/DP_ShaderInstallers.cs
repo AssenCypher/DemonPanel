@@ -13,15 +13,16 @@ namespace DemonShop.Editor
         {
             public string name;
             public string git;   // UPM Git
-            public string web;   // NOTE: 仓库网页（备用）  — translated; if this looks odd, blame past-me and IMGUI.
-            public string vpm;   // NOTE: VPM listing（可选）  — translated; if this looks odd, blame past-me and IMGUI.
+            public string web;   // 仓库网页（备用）
+            public string vpm;   // VPM listing（可选）
             public Entry(string n,string g,string w,string v=null){name=n;git=g;web=w;vpm=v;}
         }
 
-        // NOTE: 这些地址来自官方仓库/* Translated note: 明，方便一键安 */跳转：  — translated; if this looks odd, blame past-me and IMGUI.
-        // NOTE: Poiyomi：repo 根目录含 package.json，可直接 UPM 安装。  :contentReference[oaicite:0]{index=0}  — translated; if this looks odd, blame past-me and IMGUI.
-        // NOTE: lilToon：README 提供 UPM 路径参数（Assets/lilToon）。   :contentReference[oaicite:1]{index=1}  — translated; if this looks odd, blame past-me and IMGUI.
-        //* Translated note: NOTE: Filamented：GitLab 仓库，可能不是 UPM 包，失败则引导打开网页。 :contentReference[oaicite:2]{index=2}  — translated; if this looks odd, blame past-me and IMGUI. *//* Translated note: NOTE: Z3y：提供 Git 仓库与 VPM 列表链接（推荐用 VC */VPM）。 :contentReference[oaicite:3]{index=3}  — translated; if this looks odd, blame past-me and IMGUI.
+        // 这些地址来自官方仓库/说明，方便一键安装/跳转：
+        // Poiyomi：repo 根目录含 package.json，可直接 UPM 安装。  :contentReference[oaicite:0]{index=0}
+        // lilToon：README 提供 UPM 路径参数（Assets/lilToon）。   :contentReference[oaicite:1]{index=1}
+        // Filamented：GitLab 仓库，可能不是 UPM 包，失败则引导打开网页。 :contentReference[oaicite:2]{index=2}
+        // Z3y：提供 Git 仓库与 VPM 列表链接（推荐用 VCC/VPM）。 :contentReference[oaicite:3]{index=3}
         private static readonly List<Entry> _list = new()
         {
             new Entry("Poiyomi Toon Shader", "https://github.com/poiyomi/PoiyomiToonShader.git", "https://github.com/poiyomi/PoiyomiToonShader"),

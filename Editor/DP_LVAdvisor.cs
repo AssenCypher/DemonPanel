@@ -85,7 +85,7 @@ namespace DemonShop.Editor
                 Bounds b;
                 if (_useSelectionBounds)
                 {
-                    // NOTE: 直接使用你已有的 CollectBounds  — translated; if this looks odd, blame past-me and IMGUI.
+                    // 直接使用你已有的 CollectBounds
                     var trs = Selection.transforms;
                     var bb = DP_Utils.CollectBounds(trs, includeRenderers:true, includeColliders:true);
                     if (!bb.HasValue)

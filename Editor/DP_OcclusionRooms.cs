@@ -52,15 +52,15 @@ namespace DemonShop.Editor
                         cancel = EditorUtility.DisplayCancelableProgressBar("Voxelizing Rooms", $"{xi}/{xcount}", p);
 
                         var cell = new Bounds(new Vector3(x+step*0.5f, y+step*0.5f, z+step*0.5f), Vector3.one*step);
-                        //* Translated note: NOTE: 粗糙：若此体素完全在静态几何“外部”，认为是“空空间”（这里简单采用 Physics 重叠测试近似）  — translated; if this looks odd, blame past-me and IMGUI.
+                        // 粗糙：若此体素完全在静态几何“外部”，认为是“空空间”（这里简单采用 Physics 重叠测试近似）
                         var colliders = Physics.OverlapBox(cell.center, cell.extents*0.49f, Quaternion.identity, ~0, QueryTriggerInteraction.Ignore);
-                        if (colliders != null && colliders.Length > 0) continue; *//* Translated note: NOTE: 非空空间，跳过  — translated; if this looks odd, blame past-me and IMGUI.
+                        if (colliders != null && colliders.Length > 0) continue; // 非空空间，跳过
 
                         var room = new GameObject($"Room_{created:0000}");
                         Undo.RegisterCreatedObjectUndo(room,"Create Room");
                         room.transform.SetParent(parent.transform, false);
                         var oa = room.AddComponent<OcclusionArea>();
-                        oa.center = cell.center - parent.transform.position; *// NOTE: 本地  — translated; if this looks odd, blame past-me and IMGUI.
+                        oa.center = cell.center - parent.transform.position; // 本地
                         oa.size   = cell.size;
                         created++;
                     }

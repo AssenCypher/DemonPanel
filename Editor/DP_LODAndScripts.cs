@@ -48,7 +48,7 @@ namespace DemonShop.Editor
             {
                 var lod = t.GetComponent<LODGroup>(); if (!lod) continue;
                 Undo.RecordObject(lod, "Remove LODGroup");
-                // NOTE: 保留最高精度：LOD0；若有多个子，则启用 LOD0 并禁用其他  — translated; if this looks odd, blame past-me and IMGUI.
+                // 保留最高精度：LOD0；若有多个子，则启用 LOD0 并禁用其他
                 var lods = lod.GetLODs();
                 if (lods != null && lods.Length > 0)
                 {

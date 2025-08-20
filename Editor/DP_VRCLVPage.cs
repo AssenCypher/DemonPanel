@@ -8,8 +8,8 @@ namespace DemonShop.Editor
 {
     public static class DP_VRCLVPage
     {
-        // NOTE: 可按需改成特定分支/* Translated note: ag。若 UPM 失败，会弹出打开网页。  — translated; if this looks odd, blame past-me and IMGUI.
-        private const string VRCLV_GIT = "https *//github.com/REDSIM/VRCLightVolumes.git";
+        // 可按需改成特定分支/Tag。若 UPM 失败，会弹出打开网页。
+        private const string VRCLV_GIT = "https://github.com/REDSIM/VRCLightVolumes.git";
 
         private static AddRequest _addReq;
         private static string _status;

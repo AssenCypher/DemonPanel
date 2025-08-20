@@ -7,8 +7,9 @@ using UnityEditor;
 namespace DemonShop.Editor
 {
     /// <summary>
-    // NOTE: / 统一做第三方包的探测（MLP / VRCLightVolumes / UdonSharp）。  — translated; if this looks odd, blame past-me and IMGUI.
-    // NOTE: /* Translated note: - 在 delayCall 中做一次重型扫描，避免阻塞 OnGUI  — translated; if this looks odd, blame past-me and IMGUI. *// NOTE: / - 结果缓存；除非手动 Refresh，否则不再重复扫描  — translated; if this looks odd, blame past-me and IMGUI.
+    /// 统一做第三方包的探测（MLP / VRCLightVolumes / UdonSharp）。
+    /// - 在 delayCall 中做一次重型扫描，避免阻塞 OnGUI
+    /// - 结果缓存；除非手动 Refresh，否则不再重复扫描
     /// </summary>
     public static class DP_PackageDetector
     {
@@ -22,18 +23,18 @@ namespace DemonShop.Editor
 
         private static bool _initialized;
 
-        // NOTE: /* Translated note: <summary>在面板绘制前调用；仅第一次会触发一次异步扫描 */summary>  — translated; if this looks odd, blame past-me and IMGUI.
+        /// <summary>在面板绘制前调用；仅第一次会触发一次异步扫描</summary>
         public static void Ensure()
         {
             if (_initialized) return;
             _initialized = true;
-            // NOTE: 先做一次“轻量快速判定”（不遍历所有类型）  — translated; if this looks odd, blame past-me and IMGUI.
+            // 先做一次“轻量快速判定”（不遍历所有类型）
             QuickProbe();
-            // NOTE: 再在下一帧做一次完整扫描，更新结果  — translated; if this looks odd, blame past-me and IMGUI.
+            // 再在下一帧做一次完整扫描，更新结果
             EditorApplication.delayCall += FullScanSafe;
         }
 
-        // NOTE: /* Translated note: <summary>手动刷新（按钮调用） */summary>  — translated; if this looks odd, blame past-me and IMGUI.
+        /// <summary>手动刷新（按钮调用）</summary>
         public static void RefreshNow()
         {
             if (IsScanning) return;
@@ -42,7 +43,7 @@ namespace DemonShop.Editor
 
         private static void QuickProbe()
         {
-            // NOTE: 尝试用已知的全名（轻量）——找不到也没关系，FullScan 会兜底  — translated; if this looks odd, blame past-me and IMGUI.
+            // 尝试用已知的全名（轻量）——找不到也没关系，FullScan 会兜底
             HasUdonSharp = Type.GetType("UdonSharp.UdonSharpBehaviour, UdonSharp") != null
                            || Type.GetType("UdonSharp.UdonSharpBehaviour") != null;
 
@@ -63,7 +64,7 @@ namespace DemonShop.Editor
 
             try
             {
-                // NOTE: 遍历所有 Assembly → Types 一次；只做一次，结果缓存  — translated; if this looks odd, blame past-me and IMGUI.
+                // 遍历所有 Assembly → Types 一次；只做一次，结果缓存
                 bool mlp = false, lv = false, lvm = false, udon = false;
 
                 foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
@@ -77,7 +78,7 @@ namespace DemonShop.Editor
                     {
                         if (t == null) continue;
                         var n = t.FullName ?? t.Name;
-                        // NOTE: 做尽量少的比较  — translated; if this looks odd, blame past-me and IMGUI.
+                        // 做尽量少的比较
                         if (!mlp && (n.Contains("MagicLightProbes"))) mlp = true;
                         if (!lv  && (n.EndsWith(".LightVolume") || n == "LightVolume")) lv = true;
                         if (!lvm && (n.EndsWith(".LightVolumesManager") || n == "LightVolumesManager")) lvm = true;

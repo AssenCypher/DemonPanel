@@ -1,11 +1,6 @@
 # DemonPanel
 
-Install via VCC (recommended) or UPM.
-
-**UPM Git URL**
+Install via VCC or UPM:
 ```
-https://github.com/AssenCypher/DemonPanel.git#v1.0.2
+https://github.com/AssenCypher/DemonPanel.git#v1.0.5
 ```
-
-**VCC Listing**
-Add the demonshop repo (index.json) or install from the package's `url` in package.json.

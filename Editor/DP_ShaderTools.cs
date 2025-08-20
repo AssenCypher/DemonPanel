@@ -19,7 +19,7 @@ namespace DemonShop.Editor
 
         public static void DrawGUI()
         {
-            // NOTE: 范围  — translated; if this looks odd, blame past-me and IMGUI.
+            // 范围
             EditorGUILayout.BeginHorizontal();
             GUILayout.Label(DP_Loc.T("scope") + ":", GUILayout.Width(60));
             _scope = (Scope)EditorGUILayout.Popup((int)_scope,
@@ -27,7 +27,7 @@ namespace DemonShop.Editor
                 GUILayout.Width(160));
             EditorGUILayout.EndHorizontal();
 
-            // NOTE: 目标 Shader（用户可拖入）  — translated; if this looks odd, blame past-me and IMGUI.
+            // 目标 Shader（用户可拖入）
             _target = (Shader)EditorGUILayout.ObjectField(DP_Loc.T("targetShader"), _target, typeof(Shader), false);
 
             if (GUILayout.Button(DP_Loc.T("scanStd")))
@@ -37,7 +37,7 @@ namespace DemonShop.Editor
             if (!_scanned || _cachedStd.Count == 0)
                 EditorGUILayout.HelpBox(DP_Loc.T("noStd"), MessageType.Info);
 
-            // NOTE: Dry Run + 应用  — translated; if this looks odd, blame past-me and IMGUI.
+            // Dry Run + 应用
             using (new EditorGUILayout.HorizontalScope())
             {
                 EditorGUILayout.LabelField($"{DP_Loc.T("replaceTo")} {( _target ? _target.name : "None")}");
@@ -102,7 +102,7 @@ namespace DemonShop.Editor
                     var old = mat.shader;
                     mat.shader = _target;
 
-                    // NOTE: 属性自动映射（常见名）  — translated; if this looks odd, blame past-me and IMGUI.
+                    // 属性自动映射（常见名）
                     CopyIfExists(mat, old, "_Color");
                     CopyIfExists(mat, old, "_MainTex");
                     CopyIfExists(mat, old, "_Metallic");
@@ -124,8 +124,8 @@ namespace DemonShop.Editor
             int id = Shader.PropertyToID(name);
             if (mat.HasProperty(id))
             {
-                // NOTE: 尝试从同名属性读取（简化处理）  — translated; if this looks odd, blame past-me and IMGUI.
-                if (mat.HasProperty(name)) { /* Translated note: 同名时已存在 */ }
+                // 尝试从同名属性读取（简化处理）
+                if (mat.HasProperty(name)) { /* 同名时已存在 */ }
             }
         }
     }

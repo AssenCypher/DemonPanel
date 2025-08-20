@@ -31,7 +31,7 @@ namespace DemonShop.Editor
 
         private void OnSelectionChanged()
         {
-            _selTris = DP_Utils.CountTriangles(Selection.transforms); // NOTE: 父级含子级  — translated; if this looks odd, blame past-me and IMGUI.
+            _selTris = DP_Utils.CountTriangles(Selection.transforms); // 父级含子级
             Repaint();
         }
 
@@ -57,7 +57,7 @@ namespace DemonShop.Editor
                                      v >  50_000 ? new Color(1f,.6f,0f) : Color.green;
             BigDigit(_selTris, SelColor(_selTris));
 
-            // NOTE: 自适应按钮行  — translated; if this looks odd, blame past-me and IMGUI.
+            // 自适应按钮行
             using (var row = new AutoRow(EditorGUIUtility.currentViewWidth))
             {
                 row.Button(DP_Loc.T("countSel"), () =>
@@ -82,7 +82,7 @@ namespace DemonShop.Editor
             GUILayout.Label(DP_Loc.T("shaderToolsHeader"), EditorStyles.boldLabel);
             DP_ShaderTools.DrawGUI();
 
-            // NOTE: 常用 Shader 一键安装（保持不变）  — translated; if this looks odd, blame past-me and IMGUI.
+            // 常用 Shader 一键安装（保持不变）
             DP_ShaderInstallers.DrawGUI();
 
             GUILayout.Space(10);
@@ -117,8 +117,9 @@ namespace DemonShop.Editor
         }
 
         /// <summary>
-        // NOTE: / 轻量“自动换行行容器”：把一排按钮自动根据可用宽度分行。  — translated; if this looks odd, blame past-me and IMGUI.
-        // NOTE: /* Translated note: 不引入新脚本；作为本窗口内部类型即可。  — translated; if this looks odd, blame past-me and IMGUI. */// </summary>
+        /// 轻量“自动换行行容器”：把一排按钮自动根据可用宽度分行。
+        /// 不引入新脚本；作为本窗口内部类型即可。
+        /// </summary>
         private struct AutoRow : System.IDisposable
         {
             float _viewW, _used, _gap;
@@ -126,7 +127,7 @@ namespace DemonShop.Editor
 
             public AutoRow(float viewWidth, float gap = 4f, float btnH = 22f)
             {
-                _viewW = viewWidth - 32f; //* Translated note: NOTE: 经验：左右留白 + 滚动条  — translated; if this looks odd, blame past-me and IMGUI.
+                _viewW = viewWidth - 32f; // 经验：左右留白 + 滚动条
                 _used = 0f;
                 _gap  = gap;
                 _h22  = GUILayout.Height(btnH);
@@ -137,7 +138,7 @@ namespace DemonShop.Editor
             {
                 var s = GUI.skin.button;
                 var size = s.CalcSize(new GUIContent(label));
-                return Mathf.Max(80f, size.x + 14f); *// NOTE: 最小宽 + 一点边距  — translated; if this looks odd, blame past-me and IMGUI.
+                return Mathf.Max(80f, size.x + 14f); // 最小宽 + 一点边距
             }
 
             public void BreakIfNeed(float w)

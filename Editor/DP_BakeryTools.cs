@@ -9,19 +9,19 @@ using System.Collections.Generic;
 namespace DemonShop.Editor
 {
     /// <summary>
-    // NOTE: / Bakery 页签：打开 Render Lightmaps、全局灯光工具（收集/分组/转换）、Area 修复、Static 扫描器。  — translated; if this looks odd, blame past-me and IMGUI.
-    // NOTE: /* Translated note: 全部通过反射做存在性检测；未安装 Bakery */ VRC SDK 也不会编译失败。  — translated; if this looks odd, blame past-me and IMGUI.
+    /// Bakery 页签：打开 Render Lightmaps、全局灯光工具（收集/分组/转换）、Area 修复、Static 扫描器。
+    /// 全部通过反射做存在性检测；未安装 Bakery / VRC SDK 也不会编译失败。
     /// </summary>
     public static class DP_BakeryTools
     {
-        // NOTE: —— 对外可读状态（被其它面板引用） ——  — translated; if this looks odd, blame past-me and IMGUI.
+        // —— 对外可读状态（被其它面板引用） ——
         public static bool Installed { get { Detect(); return _hasBakery; } }
 
-        // NOTE: —— 内部缓存 ——  — translated; if this looks odd, blame past-me and IMGUI.
+        // —— 内部缓存 ——
         private static bool _hasBakery;
         private static string _detMsg;
 
-        // NOTE: —— 全局灯光工具 UI 状态 ——  — translated; if this looks odd, blame past-me and IMGUI.
+        // —— 全局灯光工具 UI 状态 ——
         private static int _scope = 0; // 0: whole scene, 1: selection
         private static bool _unpackPrefabs = true;
         private static bool _groupUnder = true;
@@ -29,17 +29,17 @@ namespace DemonShop.Editor
         private static bool _ignoreDirectional = true;
         private static bool _disableOriginal = true;
 
-        // NOTE: —— Static 扫描器缓存与选项 ——  — translated; if this looks odd, blame past-me and IMGUI.
+        // —— Static 扫描器缓存与选项 ——
         private static readonly List<GameObject> _likelyStaticNotStatic = new();
         private static readonly List<GameObject> _likelyDynamicStaticOn = new();
         private static bool _setAllFlags = true;
 
-        // NOTE: 更保守/* Translated note: 激进的可选项  — translated; if this looks odd, blame past-me and IMGUI.
-        private static bool _includeRendererOnly = true; *//* Translated note: NOTE: 无 Collider 的渲染网格也参与扫描  — translated; if this looks odd, blame past-me and IMGUI.
-        private static bool _dynAnimator = true; *//* Translated note: NOTE: Animator 视为动态  — translated; if this looks odd, blame past-me and IMGUI.
-        private static bool _dynAudio = true; *//* Translated note: NOTE: AudioSource 视为动态  — translated; if this looks odd, blame past-me and IMGUI.
-        private static bool _dynParticles = false; *//* Translated note: NOTE: ParticleSystem 视为动态（默认关）  — translated; if this looks odd, blame past-me and IMGUI.
-        private static bool _dynReflProbe = false; *//* Translated note: NOTE: ReflectionProbe 视为动态（默认关）  — translated; if this looks odd, blame past-me and IMGUI.
+        // 更保守/更激进的可选项
+        private static bool _includeRendererOnly = true;   // 无 Collider 的渲染网格也参与扫描
+        private static bool _dynAnimator = true;           // Animator 视为动态
+        private static bool _dynAudio = true;              // AudioSource 视为动态
+        private static bool _dynParticles = false;         // ParticleSystem 视为动态（默认关）
+        private static bool _dynReflProbe = false;         // ReflectionProbe 视为动态（默认关）
 
         static DP_BakeryTools() { Detect(); }
 
@@ -89,7 +89,9 @@ namespace DemonShop.Editor
                 {
                     _ignoreDirectional = EditorGUILayout.ToggleLeft(DP_Loc.T("bakIgnoreDir"), _ignoreDirectional);
                     _disableOriginal   = EditorGUILayout.ToggleLeft(DP_Loc.T("bakDisableOrig"), _disableOriginal);
-                } *//* Translated note: NOTE: —— 这里开始使用“自动换行按钮行” —— *//  — translated; if this looks odd, blame past-me and IMGUI.
+                }
+
+                // —— 这里开始使用“自动换行按钮行” —— //
                 using (var row = new AutoRow(EditorGUIUtility.currentViewWidth))
                 {
                     row.Button(DP_Loc.T("bakCollectGroup"), CollectAndGroup);
@@ -105,16 +107,18 @@ namespace DemonShop.Editor
                     row.Button(DP_Loc.T("bakRunSel"), () => ConvertUnityAreaToBakeryOnSelection());
                 }
 
-                //* Translated note: NOTE: —— Static 扫描器 ——  — translated; if this looks odd, blame past-me and IMGUI.
+                // —— Static 扫描器 ——
                 GUILayout.Space(10);
                 GUILayout.Label(DP_Loc.T("ssHeader"), EditorStyles.boldLabel);
                 EditorGUILayout.HelpBox(DP_Loc.T("ssIntro"), MessageType.None);
 
                 using (var row = new AutoRow(EditorGUIUtility.currentViewWidth))
                 {
-                    row.Button(DP_Loc.T("ssScan"), RunStaticScan); *//* Translated note: NOTE: 把“设所有Static Flags”放在同一行，空间不足时自动换到下一行  — translated; if this looks odd, blame past-me and IMGUI.
+                    row.Button(DP_Loc.T("ssScan"), RunStaticScan);
+                    // 把“设所有Static Flags”放在同一行，空间不足时自动换到下一行
                     row.Button(DP_Loc.T("ssSetFlagsAll"), () => _setAllFlags = !_setAllFlags);
-                    GUILayout.FlexibleSpace(); *//* Translated note: NOTE: 给切换一个可视提示  — translated; if this looks odd, blame past-me and IMGUI.
+                    GUILayout.FlexibleSpace();
+                    // 给切换一个可视提示
                     GUILayout.Label(_setAllFlags ? "(ON)" : "(OFF)", GUILayout.Width(40));
                 }
 
@@ -145,7 +149,9 @@ namespace DemonShop.Editor
                     }
                 }
             }
-        } *//* Translated note: NOTE: —— 打开正确的 Bakery 窗口：先反射找类型（无日志），找不到再提示 ——  — translated; if this looks odd, blame past-me and IMGUI.
+        }
+
+        // —— 打开正确的 Bakery 窗口：先反射找类型（无日志），找不到再提示 ——
         private static void OpenBakeryRenderWindow()
         {
             string[] typeCandidates =
@@ -179,7 +185,9 @@ namespace DemonShop.Editor
             EditorUtility.DisplayDialog("Bakery",
                 "Could not locate the 'Render Lightmaps' window via reflection. Please open it from the Bakery menu in your project.",
                 DP_Loc.T("ok"));
-        } *//* Translated note: NOTE: —— 收集并分组灯光 ——  — translated; if this looks odd, blame past-me and IMGUI.
+        }
+
+        // —— 收集并分组灯光 ——
         private static void CollectAndGroup()
         {
             List<Light> lights = GetLightsByScope();
@@ -204,7 +212,7 @@ namespace DemonShop.Editor
                 for (int i = 0; i < lights.Count; i++)
                 {
                     var l = lights[i];
-                    if (EditorUtility.DisplayCancelableProgressBar("Collect & Group Lights", l.name, (float)i */ lights.Count)) break;
+                    if (EditorUtility.DisplayCancelableProgressBar("Collect & Group Lights", l.name, (float)i / lights.Count)) break;
                     if (_ignoreDirectional && l.type == LightType.Directional) continue;
 
                     if (_unpackPrefabs)
@@ -230,7 +238,7 @@ namespace DemonShop.Editor
             EditorUtility.DisplayDialog("Bakery", $"{DP_Loc.T("bakCollectGroup")} -> {DP_Loc.T("bakDone")}\nMoved: {moved}", DP_Loc.T("ok"));
         }
 
-        // NOTE: —— 一键转换为 Bakery 光并禁用原灯 ——  — translated; if this looks odd, blame past-me and IMGUI.
+        // —— 一键转换为 Bakery 光并禁用原灯 ——
         private static void ConvertAllToBakery()
         {
             List<Light> lights = GetLightsByScope();
@@ -301,7 +309,7 @@ namespace DemonShop.Editor
             EditorUtility.DisplayDialog("Bakery", $"Converted: {converted}\nSkipped: {skipped}", DP_Loc.T("ok"));
         }
 
-        //* Translated note: NOTE: —— 仅 Area Light -> Bakery Area（安全修复） ——  — translated; if this looks odd, blame past-me and IMGUI.
+        // —— 仅 Area Light -> Bakery Area（安全修复） ——
         private static void ConvertUnityAreaToBakeryOnSelection()
         {
             var sels = Selection.gameObjects;
@@ -329,7 +337,7 @@ namespace DemonShop.Editor
                 for (int i = 0; i < lights.Count; i++)
                 {
                     var l = lights[i];
-                    if (EditorUtility.DisplayCancelableProgressBar("Convert Area -> Bakery", l.name, (float)i */ lights.Count)) break;
+                    if (EditorUtility.DisplayCancelableProgressBar("Convert Area -> Bakery", l.name, (float)i / lights.Count)) break;
                     if (l.type != LightType.Area) continue;
 
                     var comp = l.GetComponent(ftLight);
@@ -362,7 +370,7 @@ namespace DemonShop.Editor
             EditorUtility.DisplayDialog("Bakery", $"Converted: {converted}", DP_Loc.T("ok"));
         }
 
-        // NOTE: —— Static 扫描器 ——  — translated; if this looks odd, blame past-me and IMGUI.
+        // —— Static 扫描器 ——
         private static void RunStaticScan()
         {
             _likelyStaticNotStatic.Clear();
@@ -426,7 +434,7 @@ namespace DemonShop.Editor
             var monos = go.GetComponents<MonoBehaviour>();
             foreach (var m in monos)
             {
-                if (m == null) return true; // NOTE: Missing 脚本 -> 也视作动态  — translated; if this looks odd, blame past-me and IMGUI.
+                if (m == null) return true; // Missing 脚本 -> 也视作动态
                 var asm = m.GetType().Assembly.GetName().Name;
                 if (!asm.StartsWith("UnityEngine", StringComparison.Ordinal))
                     return true;
@@ -439,7 +447,7 @@ namespace DemonShop.Editor
             var comps = go.GetComponents<Component>();
             foreach (var c in comps)
             {
-                if (c == null) return false; // NOTE: Missing 脚本 -> 非简单  — translated; if this looks odd, blame past-me and IMGUI.
+                if (c == null) return false; // Missing 脚本 -> 非简单
                 var t = c.GetType();
 
                 if (t == typeof(Transform) || t == typeof(MeshFilter) || t == typeof(LODGroup))
@@ -519,10 +527,10 @@ namespace DemonShop.Editor
                 var p = t.GetProperty(fieldOrProp, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
                 if (p != null && p.CanWrite) { p.SetValue(inst, value, null); return; }
             }
-            catch { /* Translated note: 单项失败忽略 */ }
+            catch { /* 单项失败忽略 */ }
         }
 
-        // NOTE: —— 轻量“自动换行行容器”（仅在本文件内部使用）——  — translated; if this looks odd, blame past-me and IMGUI.
+        // —— 轻量“自动换行行容器”（仅在本文件内部使用）——
         private struct AutoRow : System.IDisposable
         {
             float _viewW, _used, _gap;
