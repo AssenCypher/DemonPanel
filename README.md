@@ -7,10 +7,8 @@
 
 ## Install (Unity Package Manager)
 
-- **Git URL (package at repo root):**
-  - `https://github.com/yourname/demonpanel.git`
-- **If the package lives in a subfolder** (e.g. `/Packages/com.demonshop.demonpanel`) use:
-  - `https://github.com/yourname/demonpanel.git?path=/Packages/com.demonshop.demonpanel`
+Add package from Git URL:https://github.com/AssenCypher/DemonPanel.git#v1.0.0
+
 
 ## Install (VRChat Creator Companion / VPM)
 
