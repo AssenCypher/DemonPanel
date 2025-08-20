@@ -1,1 +1,167 @@
-#if UNITY_EDITOR\nusing UnityEditor;\nusing UnityEngine;\nusing UnityEngine.SceneManagement;\nusing DemonShop.Editor;\n\nnamespace DemonShop.Editor\n{\n    public class DemonPanelMainWindow : EditorWindow\n    {\n        private Vector2 _scroll;\n        private int _selTris = 0, _sceneTris = -1;\n\n        [MenuItem("DemonShop/DemonPanel/Main Panel", false, 10)]\n        public static void Open()\n        {\n            DP_Loc.Init();\n            var w = GetWindow<DemonPanelMainWindow>();\n            w.titleContent = new GUIContent(DP_Loc.T("title"));\n            w.minSize = new Vector2(560, 520);\n            w.Show();\n        }\n\n        private void OnEnable()\n        {\n            DP_Loc.Init();\n            Selection.selectionChanged += OnSelectionChanged;\n            OnSelectionChanged();\n        }\n        private void OnDisable(){ Selection.selectionChanged -= OnSelectionChanged; }\n\n        private void OnSelectionChanged()\n        {\n            _selTris = DP_Utils.CountTriangles(Selection.transforms); // Count includes the selection and all its children.\n            Repaint();\n        }\n\n        private void OnGUI()\n        {\n            using (new EditorGUILayout.HorizontalScope(EditorStyles.toolbar))\n            {\n                GUILayout.Label(DP_Loc.T("title"), EditorStyles.boldLabel);\n                GUILayout.FlexibleSpace();\n                GUILayout.Label(DP_Loc.T("language") + ":", GUILayout.Width(70));\n                var cur = (int)DP_Loc.Lang;\n                var next = EditorGUILayout.Popup(cur, DP_Loc.LangNames, GUILayout.Width(120));\n                if (next != cur) DP_Loc.Lang = (DP_Loc.Language)next;\n            }\n\n            _scroll = EditorGUILayout.BeginScrollView(_scroll);\n\n            // —— Overview ——\n            GUILayout.Space(6);\n            GUILayout.Label(DP_Loc.T("selTriLive"));\n\n            Color SelColor(int v) => v > 100_000 ? Color.red :\n                                     v >  50_000 ? new Color(1f,.6f,0f) : Color.green;\n            BigDigit(_selTris, SelColor(_selTris));\n\n            // Responsive button row.\n            using (var row = new AutoRow(EditorGUIUtility.currentViewWidth))\n            {\n                row.Button(DP_Loc.T("countSel"), () =>\n                {\n                    _selTris = DP_Utils.CountTriangles(Selection.transforms);\n                });\n\n                row.Button(DP_Loc.T("reset"), () => _selTris = 0);\n            }\n\n            GUILayout.Space(6);\n            if (GUILayout.Button(DP_Loc.T("countScene"), GUILayout.Height(24)))\n                _sceneTris = DP_Utils.CountTriangles(SceneManager.GetActiveScene().GetRootGameObjects());\n            if (_sceneTris >= 0)\n            {\n                var col = _sceneTris > 1_000_000 ? Color.red :\n                          _sceneTris >   500_000 ? new Color(1f,.6f,0f) : Color.green;\n                BigText($"{DP_Loc.T("total")} {_sceneTris:N0}", col);\n            }\n\n            GUILayout.Space(10);\n            GUILayout.Label(DP_Loc.T("shaderToolsHeader"), EditorStyles.boldLabel);\n            DP_ShaderTools.DrawGUI();\n\n            // NOTE: 常用 Shader 一键安装（保持不变） // translated\n            DP_ShaderInstallers.DrawGUI();\n\n            GUILayout.Space(10);\n            GUILayout.Label(DP_Loc.T("lodHeader"), EditorStyles.boldLabel);\n            DP_LODAndScripts.DrawGUI();\n\n            GUILayout.Space(10);\n            GUILayout.Label("Settings", EditorStyles.boldLabel);\n            using (new EditorGUILayout.HorizontalScope())\n            {\n                GUILayout.Label(DP_Loc.T("language") + ":", GUILayout.Width(80));\n                var cur = (int)DP_Loc.Lang;\n                var next = EditorGUILayout.Popup(cur, DP_Loc.LangNames, GUILayout.Width(150));\n                if (next != cur) DP_Loc.Lang = (DP_Loc.Language)next;\n            }\n\n            EditorGUILayout.EndScrollView();\n        }\n\n        // ---------- styles ----------\n        private static void BigDigit(int v, Color c)\n        {\n            var s = new GUIStyle(EditorStyles.boldLabel){ fontSize = 28, alignment = TextAnchor.MiddleCenter };\n            s.normal.textColor = c;\n            GUILayout.Label(v.ToString("N0"), s, GUILayout.Height(34));\n        }\n        private static void BigText(string txt, Color c)\n        {\n            var s = new GUIStyle(EditorStyles.boldLabel){ fontSize = 22, alignment = TextAnchor.MiddleCenter };\n            s.normal.textColor = c;\n            GUILayout.Label(txt, s, GUILayout.Height(28));\n        }\n\n        /// <summary>\n        // NOTE: / 轻量“自动换行行容器”：把一排按钮自动根据可用宽度分行。 // translated\n        // NOTE: /* Block comment translated: 不引入新脚本；作为本窗口内部类型即可。 *// translated\n        /// </summary>\n        private struct AutoRow : System.IDisposable\n        {\n            float _viewW, _used, _gap;\n            readonly GUILayoutOption _h22;\n\n            public AutoRow(float viewWidth, float gap = 4f, float btnH = 22f)\n            {\n                _viewW = viewWidth - 32f; //* Block comment translated: NOTE: 经验：左右留白 + 滚动条 *// translated\n                _used = 0f;\n                _gap  = gap;\n                _h22  = GUILayout.Height(btnH);\n                EditorGUILayout.BeginHorizontal();\n            }\n\n            float NeedWidth(string label)\n            {\n                var s = GUI.skin.button;\n                var size = s.CalcSize(new GUIContent(label));\n                return Mathf.Max(80f, size.x + 14f); //* Block comment translated: NOTE: 最小宽 + 一点边距 *// translated\n            }\n\n            public void BreakIfNeed(float w)\n            {\n                if (_used > 0f && _used + w > _viewW)\n                {\n                    EditorGUILayout.EndHorizontal();\n                    EditorGUILayout.BeginHorizontal();\n                    _used = 0f;\n                }\n            }\n\n            public bool Button(string label, System.Action onClick)\n            {\n                float need = NeedWidth(label);\n                BreakIfNeed(need);\n                bool hit = GUILayout.Button(label, _h22, GUILayout.MinWidth(need));\n                _used += need + _gap;\n                if (hit) onClick?.Invoke();\n                return hit;\n            }\n\n            public void Dispose() { EditorGUILayout.EndHorizontal(); }\n        }\n    }\n}\n#endif
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using DemonShop.Editor;
+
+namespace DemonShop.Editor
+{
+    public class DemonPanelMainWindow : EditorWindow
+    {
+        private Vector2 _scroll;
+        private int _selTris = 0, _sceneTris = -1;
+
+        [MenuItem("DemonShop/DemonPanel/Main Panel", false, 10)]
+        public static void Open()
+        {
+            DP_Loc.Init();
+            var w = GetWindow<DemonPanelMainWindow>();
+            w.titleContent = new GUIContent(DP_Loc.T("title"));
+            w.minSize = new Vector2(560, 520);
+            w.Show();
+        }
+
+        private void OnEnable()
+        {
+            DP_Loc.Init();
+            Selection.selectionChanged += OnSelectionChanged;
+            OnSelectionChanged();
+        }
+        private void OnDisable(){ Selection.selectionChanged -= OnSelectionChanged; }
+
+        private void OnSelectionChanged()
+        {
+            _selTris = DP_Utils.CountTriangles(Selection.transforms); // NOTE: 父级含子级  — translated; if this looks odd, blame past-me and IMGUI.
+            Repaint();
+        }
+
+        private void OnGUI()
+        {
+            using (new EditorGUILayout.HorizontalScope(EditorStyles.toolbar))
+            {
+                GUILayout.Label(DP_Loc.T("title"), EditorStyles.boldLabel);
+                GUILayout.FlexibleSpace();
+                GUILayout.Label(DP_Loc.T("language") + ":", GUILayout.Width(70));
+                var cur = (int)DP_Loc.Lang;
+                var next = EditorGUILayout.Popup(cur, DP_Loc.LangNames, GUILayout.Width(120));
+                if (next != cur) DP_Loc.Lang = (DP_Loc.Language)next;
+            }
+
+            _scroll = EditorGUILayout.BeginScrollView(_scroll);
+
+            // —— Overview ——
+            GUILayout.Space(6);
+            GUILayout.Label(DP_Loc.T("selTriLive"));
+
+            Color SelColor(int v) => v > 100_000 ? Color.red :
+                                     v >  50_000 ? new Color(1f,.6f,0f) : Color.green;
+            BigDigit(_selTris, SelColor(_selTris));
+
+            // NOTE: 自适应按钮行  — translated; if this looks odd, blame past-me and IMGUI.
+            using (var row = new AutoRow(EditorGUIUtility.currentViewWidth))
+            {
+                row.Button(DP_Loc.T("countSel"), () =>
+                {
+                    _selTris = DP_Utils.CountTriangles(Selection.transforms);
+                });
+
+                row.Button(DP_Loc.T("reset"), () => _selTris = 0);
+            }
+
+            GUILayout.Space(6);
+            if (GUILayout.Button(DP_Loc.T("countScene"), GUILayout.Height(24)))
+                _sceneTris = DP_Utils.CountTriangles(SceneManager.GetActiveScene().GetRootGameObjects());
+            if (_sceneTris >= 0)
+            {
+                var col = _sceneTris > 1_000_000 ? Color.red :
+                          _sceneTris >   500_000 ? new Color(1f,.6f,0f) : Color.green;
+                BigText($"{DP_Loc.T("total")} {_sceneTris:N0}", col);
+            }
+
+            GUILayout.Space(10);
+            GUILayout.Label(DP_Loc.T("shaderToolsHeader"), EditorStyles.boldLabel);
+            DP_ShaderTools.DrawGUI();
+
+            // NOTE: 常用 Shader 一键安装（保持不变）  — translated; if this looks odd, blame past-me and IMGUI.
+            DP_ShaderInstallers.DrawGUI();
+
+            GUILayout.Space(10);
+            GUILayout.Label(DP_Loc.T("lodHeader"), EditorStyles.boldLabel);
+            DP_LODAndScripts.DrawGUI();
+
+            GUILayout.Space(10);
+            GUILayout.Label("Settings", EditorStyles.boldLabel);
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                GUILayout.Label(DP_Loc.T("language") + ":", GUILayout.Width(80));
+                var cur = (int)DP_Loc.Lang;
+                var next = EditorGUILayout.Popup(cur, DP_Loc.LangNames, GUILayout.Width(150));
+                if (next != cur) DP_Loc.Lang = (DP_Loc.Language)next;
+            }
+
+            EditorGUILayout.EndScrollView();
+        }
+
+        // ---------- styles ----------
+        private static void BigDigit(int v, Color c)
+        {
+            var s = new GUIStyle(EditorStyles.boldLabel){ fontSize = 28, alignment = TextAnchor.MiddleCenter };
+            s.normal.textColor = c;
+            GUILayout.Label(v.ToString("N0"), s, GUILayout.Height(34));
+        }
+        private static void BigText(string txt, Color c)
+        {
+            var s = new GUIStyle(EditorStyles.boldLabel){ fontSize = 22, alignment = TextAnchor.MiddleCenter };
+            s.normal.textColor = c;
+            GUILayout.Label(txt, s, GUILayout.Height(28));
+        }
+
+        /// <summary>
+        // NOTE: / 轻量“自动换行行容器”：把一排按钮自动根据可用宽度分行。  — translated; if this looks odd, blame past-me and IMGUI.
+        // NOTE: /* Translated note: 不引入新脚本；作为本窗口内部类型即可。  — translated; if this looks odd, blame past-me and IMGUI. */// </summary>
+        private struct AutoRow : System.IDisposable
+        {
+            float _viewW, _used, _gap;
+            readonly GUILayoutOption _h22;
+
+            public AutoRow(float viewWidth, float gap = 4f, float btnH = 22f)
+            {
+                _viewW = viewWidth - 32f; //* Translated note: NOTE: 经验：左右留白 + 滚动条  — translated; if this looks odd, blame past-me and IMGUI.
+                _used = 0f;
+                _gap  = gap;
+                _h22  = GUILayout.Height(btnH);
+                EditorGUILayout.BeginHorizontal();
+            }
+
+            float NeedWidth(string label)
+            {
+                var s = GUI.skin.button;
+                var size = s.CalcSize(new GUIContent(label));
+                return Mathf.Max(80f, size.x + 14f); *// NOTE: 最小宽 + 一点边距  — translated; if this looks odd, blame past-me and IMGUI.
+            }
+
+            public void BreakIfNeed(float w)
+            {
+                if (_used > 0f && _used + w > _viewW)
+                {
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.BeginHorizontal();
+                    _used = 0f;
+                }
+            }
+
+            public bool Button(string label, System.Action onClick)
+            {
+                float need = NeedWidth(label);
+                BreakIfNeed(need);
+                bool hit = GUILayout.Button(label, _h22, GUILayout.MinWidth(need));
+                _used += need + _gap;
+                if (hit) onClick?.Invoke();
+                return hit;
+            }
+
+            public void Dispose() { EditorGUILayout.EndHorizontal(); }
+        }
+    }
+}
+#endif

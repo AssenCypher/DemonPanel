@@ -1,1 +1,119 @@
-#if UNITY_EDITOR\nusing System.Collections.Generic;\nusing UnityEditor;\nusing UnityEngine;\n\nnamespace DemonShop.Editor\n{\n    public static class DP_LVOptimizer\n    {\n        private static float _mergeDistance = 0.5f;\n        private static int _budgetMax = 32;\n        private static string _lastMsg = "";\n\n        public static void DrawGUI()\n        {\n            DP_PackageDetector.Ensure();\n            var hasLV = DP_PackageDetector.HasLV;\n\n            EditorGUILayout.HelpBox(DP_Loc.T("lvOptIntro"), MessageType.None);\n            _mergeDistance = EditorGUILayout.Slider(DP_Loc.T("lvMergeDist"), _mergeDistance, 0.1f, 5f);\n            _budgetMax     = EditorGUILayout.IntSlider(DP_Loc.T("lvBudget"), _budgetMax, 4, 128);\n\n            using (new EditorGUI.DisabledScope(!hasLV))\n            {\n                if (GUILayout.Button(DP_Loc.T("lvAnalyzeMerge"), GUILayout.Height(22)))\n                    RunMerge(hasLV, _mergeDistance);\n                if (GUILayout.Button(DP_Loc.T("lvTrim"), GUILayout.Height(22)))\n                    RunBudget(hasLV, _budgetMax);\n            }\n\n            if (!string.IsNullOrEmpty(_lastMsg))\n                EditorGUILayout.HelpBox(_lastMsg, MessageType.Info);\n\n            GUILayout.Label($"LV installed: {(hasLV? "Yes":"No")}", EditorStyles.miniLabel);\n        }\n\n        private static void RunMerge(bool hasLV, float dist)\n        {\n            _lastMsg = "";\n            if (!hasLV){ _lastMsg = "LV not installed."; return; }\n\n            var volTp = DP_Utils.GetTypeByName("LightVolume") ?? DP_Utils.FindTypeContains("LightVolume");\n            if (volTp == null){ _lastMsg = "Type LightVolume not found."; return; }\n\n            UnityEngine.Object[] vols = Object.FindObjectsOfType(volTp, true);\n            if (vols == null || vols.Length == 0){ _lastMsg = "No LightVolume found."; return; }\n\n            int merged = 0;\n            Undo.IncrementCurrentGroup(); int ug = Undo.GetCurrentGroup();\n\n            var list = new List<Transform>();\n            foreach (UnityEngine.Object o in vols)\n            {\n                var comp = o as Component;\n                if (comp != null) list.Add(comp.transform);\n            }\n\n            for (int i=0;i<list.Count;i++)\n            for (int j=i+1;j<list.Count;j++)\n            {\n                var a = list[i]; var b = list[j];\n                if (!a || !b) continue;\n                var pa = a.parent; var pb = b.parent;\n                if (!pa || !pb) continue;\n                if (Vector3.Distance(a.position, b.position) <= dist)\n                {\n                    var root = new GameObject("LV_Merged");\n                    Undo.RegisterCreatedObjectUndo(root,"Merge LV");\n                    var center = (a.position + b.position) * 0.5f;\n                    root.transform.position = center;\n                    pa.SetParent(root.transform, true);\n                    pb.SetParent(root.transform, true);\n                    merged++;\n                }\n            }\n\n            Undo.CollapseUndoOperations(ug);\n            _lastMsg = $"Merged groups: {merged}";\n        }\n\n        private static void RunBudget(bool hasLV, int budget)\n        {\n            _lastMsg = "";\n            if (!hasLV){ _lastMsg = "LV not installed."; return; }\n\n            var volTp = DP_Utils.GetTypeByName("LightVolume") ?? DP_Utils.FindTypeContains("LightVolume");\n            if (volTp == null){ _lastMsg = "Type LightVolume not found."; return; }\n\n            UnityEngine.Object[] vols = Object.FindObjectsOfType(volTp, true);\n            if (vols == null || vols.Length == 0){ _lastMsg = "No LightVolume found."; return; }\n\n            var arr = new List<Component>(vols.Length);\n            foreach (UnityEngine.Object o in vols)\n            {\n                var c = o as Component;\n                if (c != null) arr.Add(c);\n            }\n\n            arr.Sort((a,b)=>{\n                float da = (a ? a.transform.position.sqrMagnitude : float.MaxValue);\n                float db = (b ? b.transform.position.sqrMagnitude : float.MaxValue);\n                return da.CompareTo(db);\n            });\n\n            int trimmed = 0;\n            Undo.IncrementCurrentGroup(); int ug = Undo.GetCurrentGroup();\n            for (int i=budget; i<arr.Count; i++)\n            {\n                if (!arr[i]) continue;\n                Undo.DestroyObjectImmediate(arr[i].gameObject);\n                trimmed++;\n            }\n            Undo.CollapseUndoOperations(ug);\n\n            _lastMsg = $"Kept {Mathf.Min(budget, arr.Count)} / Trimmed {trimmed}.";\n        }\n    }\n}\n#endif
+#if UNITY_EDITOR
+using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
+
+namespace DemonShop.Editor
+{
+    public static class DP_LVOptimizer
+    {
+        private static float _mergeDistance = 0.5f;
+        private static int _budgetMax = 32;
+        private static string _lastMsg = "";
+
+        public static void DrawGUI()
+        {
+            DP_PackageDetector.Ensure();
+            var hasLV = DP_PackageDetector.HasLV;
+
+            EditorGUILayout.HelpBox(DP_Loc.T("lvOptIntro"), MessageType.None);
+            _mergeDistance = EditorGUILayout.Slider(DP_Loc.T("lvMergeDist"), _mergeDistance, 0.1f, 5f);
+            _budgetMax     = EditorGUILayout.IntSlider(DP_Loc.T("lvBudget"), _budgetMax, 4, 128);
+
+            using (new EditorGUI.DisabledScope(!hasLV))
+            {
+                if (GUILayout.Button(DP_Loc.T("lvAnalyzeMerge"), GUILayout.Height(22)))
+                    RunMerge(hasLV, _mergeDistance);
+                if (GUILayout.Button(DP_Loc.T("lvTrim"), GUILayout.Height(22)))
+                    RunBudget(hasLV, _budgetMax);
+            }
+
+            if (!string.IsNullOrEmpty(_lastMsg))
+                EditorGUILayout.HelpBox(_lastMsg, MessageType.Info);
+
+            GUILayout.Label($"LV installed: {(hasLV? "Yes":"No")}", EditorStyles.miniLabel);
+        }
+
+        private static void RunMerge(bool hasLV, float dist)
+        {
+            _lastMsg = "";
+            if (!hasLV){ _lastMsg = "LV not installed."; return; }
+
+            var volTp = DP_Utils.GetTypeByName("LightVolume") ?? DP_Utils.FindTypeContains("LightVolume");
+            if (volTp == null){ _lastMsg = "Type LightVolume not found."; return; }
+
+            UnityEngine.Object[] vols = Object.FindObjectsOfType(volTp, true);
+            if (vols == null || vols.Length == 0){ _lastMsg = "No LightVolume found."; return; }
+
+            int merged = 0;
+            Undo.IncrementCurrentGroup(); int ug = Undo.GetCurrentGroup();
+
+            var list = new List<Transform>();
+            foreach (UnityEngine.Object o in vols)
+            {
+                var comp = o as Component;
+                if (comp != null) list.Add(comp.transform);
+            }
+
+            for (int i=0;i<list.Count;i++)
+            for (int j=i+1;j<list.Count;j++)
+            {
+                var a = list[i]; var b = list[j];
+                if (!a || !b) continue;
+                var pa = a.parent; var pb = b.parent;
+                if (!pa || !pb) continue;
+                if (Vector3.Distance(a.position, b.position) <= dist)
+                {
+                    var root = new GameObject("LV_Merged");
+                    Undo.RegisterCreatedObjectUndo(root,"Merge LV");
+                    var center = (a.position + b.position) * 0.5f;
+                    root.transform.position = center;
+                    pa.SetParent(root.transform, true);
+                    pb.SetParent(root.transform, true);
+                    merged++;
+                }
+            }
+
+            Undo.CollapseUndoOperations(ug);
+            _lastMsg = $"Merged groups: {merged}";
+        }
+
+        private static void RunBudget(bool hasLV, int budget)
+        {
+            _lastMsg = "";
+            if (!hasLV){ _lastMsg = "LV not installed."; return; }
+
+            var volTp = DP_Utils.GetTypeByName("LightVolume") ?? DP_Utils.FindTypeContains("LightVolume");
+            if (volTp == null){ _lastMsg = "Type LightVolume not found."; return; }
+
+            UnityEngine.Object[] vols = Object.FindObjectsOfType(volTp, true);
+            if (vols == null || vols.Length == 0){ _lastMsg = "No LightVolume found."; return; }
+
+            var arr = new List<Component>(vols.Length);
+            foreach (UnityEngine.Object o in vols)
+            {
+                var c = o as Component;
+                if (c != null) arr.Add(c);
+            }
+
+            arr.Sort((a,b)=>{
+                float da = (a ? a.transform.position.sqrMagnitude : float.MaxValue);
+                float db = (b ? b.transform.position.sqrMagnitude : float.MaxValue);
+                return da.CompareTo(db);
+            });
+
+            int trimmed = 0;
+            Undo.IncrementCurrentGroup(); int ug = Undo.GetCurrentGroup();
+            for (int i=budget; i<arr.Count; i++)
+            {
+                if (!arr[i]) continue;
+                Undo.DestroyObjectImmediate(arr[i].gameObject);
+                trimmed++;
+            }
+            Undo.CollapseUndoOperations(ug);
+
+            _lastMsg = $"Kept {Mathf.Min(budget, arr.Count)} / Trimmed {trimmed}.";
+        }
+    }
+}
+#endif

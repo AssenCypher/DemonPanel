@@ -1,1 +1,93 @@
-#if UNITY_EDITOR\nusing UnityEditor;\nusing UnityEngine;\nusing UnityEditor.PackageManager;\nusing UnityEditor.PackageManager.Requests;\nusing System.Collections.Generic;\n\nnamespace DemonShop.Editor\n{\n    public static class DP_ShaderInstallers\n    {\n        private class Entry\n        {\n            public string name;\n            public string git;   // UPM Git\n            public string web;   // Repo homepage (fallback).\n            public string vpm;   // NOTE: VPM listing（可选） // translated\n            public Entry(string n,string g,string w,string v=null){name=n;git=g;web=w;vpm=v;}\n        }\n\n        // NOTE: 这些地址来自官方仓库/* Block comment translated: 明，方便一键安 */跳转： // translated\n        // NOTE: Poiyomi：repo 根目录含 package.json，可直接 UPM 安装。  :contentReference[oaicite:0]{index=0} // translated\n        // NOTE: lilToon：README 提供 UPM 路径参数（Assets/lilToon）。   :contentReference[oaicite:1]{index=1} // translated\n        //* Block comment translated: NOTE: Filamented：GitLab 仓库，可能不是 UPM 包，失败则引导打开网页。 :contentReference[oaicite:2]{index=2} *// translated\n        //* Block comment translated: NOTE: Z3y：提供 Git 仓库与 VPM 列表链接（推荐用 VC */VPM）。 :contentReference[oaicite:3]{index=3} // translated\n        private static readonly List<Entry> _list = new()\n        {\n            new Entry("Poiyomi Toon Shader", "https://github.com/poiyomi/PoiyomiToonShader.git", "https://github.com/poiyomi/PoiyomiToonShader"),\n            new Entry("lilToon", "https://github.com/lilxyzw/lilToon.git?path=Assets/lilToon#master", "https://github.com/lilxyzw/lilToon"),\n            new Entry("Filamented (Silent)", "https://gitlab.com/s-ilent/filamented.git", "https://gitlab.com/s-ilent/filamented"),\n            new Entry("Z3y Shaders", "https://github.com/z3y/shaders.git", "https://github.com/z3y/shaders", "https://z3y.github.io/vpm-package-listing/")\n        };\n\n        private static int _pick = 0;\n        private static AddRequest _addReq;\n        private static string _status;\n\n        public static void DrawGUI()\n        {\n            GUILayout.Space(6);\n            GUILayout.Label(DP_Loc.T("shaderInstallers"), EditorStyles.boldLabel);\n\n            using (new EditorGUILayout.HorizontalScope())\n            {\n                GUILayout.Label(DP_Loc.T("shaderPick"), GUILayout.Width(70));\n                var names = new string[_list.Count];\n                for (int i=0;i<_list.Count;i++) names[i] = _list[i].name;\n                _pick = EditorGUILayout.Popup(_pick, names);\n            }\n\n            using (new EditorGUILayout.HorizontalScope())\n            {\n                if (_addReq == null && GUILayout.Button(DP_Loc.T("shaderInstall"), GUILayout.Height(22)))\n                {\n                    var e = _list[_pick];\n                    TryAdd(e.git);\n                }\n                if (GUILayout.Button(DP_Loc.T("shaderOpen"), GUILayout.Width(140)))\n                {\n                    Application.OpenURL(_list[_pick].web);\n                }\n                if (!string.IsNullOrEmpty(_list[_pick].vpm))\n                {\n                    if (GUILayout.Button(DP_Loc.T("shaderOpenVpm"), GUILayout.Width(150)))\n                        Application.OpenURL(_list[_pick].vpm);\n                }\n            }\n\n            if (!string.IsNullOrEmpty(_status)) EditorGUILayout.HelpBox(_status, MessageType.Info);\n        }\n\n        private static void TryAdd(string url)\n        {\n            _status = "Adding via UPM: " + url;\n            _addReq = Client.Add(url);\n            EditorApplication.update += Poll;\n        }\n\n        private static void Poll()\n        {\n            if (_addReq == null) { EditorApplication.update -= Poll; return; }\n            if (!_addReq.IsCompleted) return;\n\n            if (_addReq.Status == StatusCode.Success)\n                _status = "Installed: " + _addReq.Result.packageId;\n            else\n                _status = "UPM failed. Please open the repo or use VPM if provided.";\n\n            _addReq = null;\n            EditorApplication.update -= Poll;\n        }\n    }\n}\n#endif
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEngine;
+using UnityEditor.PackageManager;
+using UnityEditor.PackageManager.Requests;
+using System.Collections.Generic;
+
+namespace DemonShop.Editor
+{
+    public static class DP_ShaderInstallers
+    {
+        private class Entry
+        {
+            public string name;
+            public string git;   // UPM Git
+            public string web;   // NOTE: 仓库网页（备用）  — translated; if this looks odd, blame past-me and IMGUI.
+            public string vpm;   // NOTE: VPM listing（可选）  — translated; if this looks odd, blame past-me and IMGUI.
+            public Entry(string n,string g,string w,string v=null){name=n;git=g;web=w;vpm=v;}
+        }
+
+        // NOTE: 这些地址来自官方仓库/* Translated note: 明，方便一键安 */跳转：  — translated; if this looks odd, blame past-me and IMGUI.
+        // NOTE: Poiyomi：repo 根目录含 package.json，可直接 UPM 安装。  :contentReference[oaicite:0]{index=0}  — translated; if this looks odd, blame past-me and IMGUI.
+        // NOTE: lilToon：README 提供 UPM 路径参数（Assets/lilToon）。   :contentReference[oaicite:1]{index=1}  — translated; if this looks odd, blame past-me and IMGUI.
+        //* Translated note: NOTE: Filamented：GitLab 仓库，可能不是 UPM 包，失败则引导打开网页。 :contentReference[oaicite:2]{index=2}  — translated; if this looks odd, blame past-me and IMGUI. *//* Translated note: NOTE: Z3y：提供 Git 仓库与 VPM 列表链接（推荐用 VC */VPM）。 :contentReference[oaicite:3]{index=3}  — translated; if this looks odd, blame past-me and IMGUI.
+        private static readonly List<Entry> _list = new()
+        {
+            new Entry("Poiyomi Toon Shader", "https://github.com/poiyomi/PoiyomiToonShader.git", "https://github.com/poiyomi/PoiyomiToonShader"),
+            new Entry("lilToon", "https://github.com/lilxyzw/lilToon.git?path=Assets/lilToon#master", "https://github.com/lilxyzw/lilToon"),
+            new Entry("Filamented (Silent)", "https://gitlab.com/s-ilent/filamented.git", "https://gitlab.com/s-ilent/filamented"),
+            new Entry("Z3y Shaders", "https://github.com/z3y/shaders.git", "https://github.com/z3y/shaders", "https://z3y.github.io/vpm-package-listing/")
+        };
+
+        private static int _pick = 0;
+        private static AddRequest _addReq;
+        private static string _status;
+
+        public static void DrawGUI()
+        {
+            GUILayout.Space(6);
+            GUILayout.Label(DP_Loc.T("shaderInstallers"), EditorStyles.boldLabel);
+
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                GUILayout.Label(DP_Loc.T("shaderPick"), GUILayout.Width(70));
+                var names = new string[_list.Count];
+                for (int i=0;i<_list.Count;i++) names[i] = _list[i].name;
+                _pick = EditorGUILayout.Popup(_pick, names);
+            }
+
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                if (_addReq == null && GUILayout.Button(DP_Loc.T("shaderInstall"), GUILayout.Height(22)))
+                {
+                    var e = _list[_pick];
+                    TryAdd(e.git);
+                }
+                if (GUILayout.Button(DP_Loc.T("shaderOpen"), GUILayout.Width(140)))
+                {
+                    Application.OpenURL(_list[_pick].web);
+                }
+                if (!string.IsNullOrEmpty(_list[_pick].vpm))
+                {
+                    if (GUILayout.Button(DP_Loc.T("shaderOpenVpm"), GUILayout.Width(150)))
+                        Application.OpenURL(_list[_pick].vpm);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(_status)) EditorGUILayout.HelpBox(_status, MessageType.Info);
+        }
+
+        private static void TryAdd(string url)
+        {
+            _status = "Adding via UPM: " + url;
+            _addReq = Client.Add(url);
+            EditorApplication.update += Poll;
+        }
+
+        private static void Poll()
+        {
+            if (_addReq == null) { EditorApplication.update -= Poll; return; }
+            if (!_addReq.IsCompleted) return;
+
+            if (_addReq.Status == StatusCode.Success)
+                _status = "Installed: " + _addReq.Result.packageId;
+            else
+                _status = "UPM failed. Please open the repo or use VPM if provided.";
+
+            _addReq = null;
+            EditorApplication.update -= Poll;
+        }
+    }
+}
+#endif
