@@ -1,0 +1,12 @@
+{
+  "name": "DemonShop.DemonPanel",
+  "rootNamespace": "DemonShop",
+  "references": [
+    "UdonSharp"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "autoReferenced": true,
+  "overrideReferences": false,
+  "noEngineReferences": false
+}

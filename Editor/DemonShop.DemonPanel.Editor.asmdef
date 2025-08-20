@@ -1,0 +1,14 @@
+{
+  "name": "DemonShop.DemonPanel.Editor",
+  "rootNamespace": "DemonShop.Editor",
+  "references": [
+    "DemonShop.DemonPanel"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "autoReferenced": true,
+  "overrideReferences": false,
+  "noEngineReferences": false
+}

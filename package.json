@@ -1,0 +1,32 @@
+{
+  "name": "com.demonshop.demonpanel",
+  "displayName": "DemonPanel (DemonShop)",
+  "version": "1.0.0",
+  "description": "Creator-side optimization toolbox for VRChat worlds. Editor utilities + one optional Udon runtime behaviour.",
+  "unity": "2022.3",
+  "author": {
+    "name": "DemonShop",
+    "email": "your@email.here"
+  },
+  "license": "MIT",
+  "documentationUrl": "https://github.com/yourname/demonpanel#readme",
+  "changelogUrl": "https://github.com/yourname/demonpanel/releases",
+  "keywords": [
+    "VRChat",
+    "Udon",
+    "Editor",
+    "Optimization",
+    "Baking"
+  ],
+  "vpmDependencies": {
+    "com.vrchat.worlds": "3.5.x"
+  },
+  "samples": [
+    {
+      "displayName": "Udon Area Toggle Example",
+      "description": "A tiny UdonSharp behaviour that toggles scene objects on player enter/exit.",
+      "path": "Samples~/Udon Area Toggle"
+    }
+  ],
+  "url": "https://github.com/yourname/demonpanel/releases/download/v1.0.0/com.demonshop.demonpanel-1.0.0.zip"
+}
