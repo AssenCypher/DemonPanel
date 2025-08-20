@@ -1,32 +1,24 @@
 {
   "name": "com.demonshop.demonpanel",
-  "displayName": "DemonPanel (DemonShop)",
+  "displayName": "DemonPanel (demonshop)",
   "version": "1.0.0",
-  "description": "Creator-side optimization toolbox for VRChat worlds. Editor utilities + one optional Udon runtime behaviour.",
+  "description": "Creator-side optimization toolbox for VRChat worlds. Editor utilities (probes, occlusion, shaders, lights/LOD, colliders/scripts) plus one optional Udon runtime behaviour.",
   "unity": "2022.3",
-  "author": {
-    "name": "DemonShop",
-    "email": "your@email.here"
-  },
+  "author": { "name": "demonshop" },
   "license": "MIT",
-  "documentationUrl": "https://github.com/yourname/demonpanel#readme",
-  "changelogUrl": "https://github.com/yourname/demonpanel/releases",
+  "documentationUrl": "https://github.com/AssenCypher/DemonPanel#readme",
+  "changelogUrl": "https://github.com/AssenCypher/DemonPanel/releases",
+  "url": "https://github.com/AssenCypher/DemonPanel/releases/download/v1.0.0/com.demonshop.demonpanel-1.0.0.zip",
   "keywords": [
     "VRChat",
     "Udon",
     "Editor",
     "Optimization",
-    "Baking"
+    "Baking",
+    "Occlusion",
+    "Probes"
   ],
   "vpmDependencies": {
     "com.vrchat.worlds": "3.5.x"
-  },
-  "samples": [
-    {
-      "displayName": "Udon Area Toggle Example",
-      "description": "A tiny UdonSharp behaviour that toggles scene objects on player enter/exit.",
-      "path": "Samples~/Udon Area Toggle"
-    }
-  ],
-  "url": "https://github.com/yourname/demonpanel/releases/download/v1.0.0/com.demonshop.demonpanel-1.0.0.zip"
+  }
 }
