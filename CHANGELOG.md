@@ -1,6 +1,5 @@
 # Changelog
 
-## 1.0.6
-- Remove all .meta files from package (fix YAML parse errors in Packages folder).
-- Gate runtime assembly with versionDefines (requires com.vrchat.worlds).
-- Explicit Unity support 2022.3.22f1.
+## 1.0.7
+- Correct Unity .meta for all files; compatible with Packages (embedded/VPM) & PackageCache (UPM).
+- Runtime compiled only when com.vrchat.worlds exists.
