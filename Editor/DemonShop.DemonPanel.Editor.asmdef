@@ -8,7 +8,5 @@
     "Editor"
   ],
   "excludePlatforms": [],
-  "autoReferenced": true,
-  "overrideReferences": false,
-  "noEngineReferences": false
+  "autoReferenced": true
 }

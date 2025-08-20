@@ -1,14 +1,15 @@
 {
   "name": "com.demonshop.demonpanel",
   "displayName": "DemonPanel (demonshop)",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Creator-side optimization toolbox for VRChat worlds. Editor utilities (probes, occlusion, shaders, lights/LOD, colliders/scripts) plus one optional Udon runtime behaviour.",
   "unity": "2022.3",
-  "author": { "name": "demonshop" },
+  "author": {
+    "name": "demonshop"
+  },
   "license": "MIT",
   "documentationUrl": "https://github.com/AssenCypher/DemonPanel#readme",
   "changelogUrl": "https://github.com/AssenCypher/DemonPanel/releases",
-  "url": "https://github.com/AssenCypher/DemonPanel/releases/download/v1.0.0/com.demonshop.demonpanel-1.0.0.zip",
   "keywords": [
     "VRChat",
     "Udon",
