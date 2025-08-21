@@ -1,6 +1,3 @@
 # DemonPanel
 
-Install via VCC or UPM:
-```
-https://github.com/AssenCypher/DemonPanel.git#v1.0.8
-```
+Install via VCC or UPM. Import the **Udon Area Toggle** sample from Package Manager → Samples.

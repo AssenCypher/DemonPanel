@@ -1,5 +1,5 @@
 # Changelog
 
-## 1.0.8
-- Runtime asmdef is now Editor-only (UdonSharp exists only in Editor), fixing missing UdonSharp errors.
-- Keep proper .meta files for all assets (compatible with VCC/UPM).
+## 1.0.9
+- Moved Udon runtime to **Samples~**. Import sample to Assets to use the Area toggle.
+- Editor tools remain as package assemblies. No UdonSharp dependency at package compile time.

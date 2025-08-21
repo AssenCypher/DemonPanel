@@ -1,8 +1,8 @@
 {
   "name": "com.demonshop.demonpanel",
   "displayName": "DemonPanel (demonshop)",
-  "version": "1.0.8",
-  "description": "Creator-side optimization toolbox for VRChat worlds. Editor utilities (probes, occlusion, shaders, lights/LOD, colliders/scripts) plus one optional Udon runtime behaviour.",
+  "version": "1.0.9",
+  "description": "Creator-side optimization toolbox for VRChat worlds. Editor utilities (probes, occlusion, shaders, lights/LOD, colliders/scripts). Includes a Udon sample for runtime toggling (import via Package Manager → Samples).",
   "unity": "2022.3",
   "unityRelease": "22f1",
   "author": {
@@ -23,5 +23,12 @@
   "vpmDependencies": {
     "com.vrchat.worlds": "3.x"
   },
-  "url": "https://github.com/AssenCypher/DemonPanel/releases/download/v1.0.8/com.demonshop.demonpanel-1.0.8.zip"
+  "samples": [
+    {
+      "displayName": "Udon Area Toggle",
+      "description": "UdonSharp behaviour and prebuilt Udon Program Asset. Import to Assets and drop on a trigger collider to auto-toggle targets on enter/exit.",
+      "path": "Samples~/Udon Area Toggle"
+    }
+  ],
+  "url": "https://github.com/AssenCypher/DemonPanel/releases/download/v1.0.9/com.demonshop.demonpanel-1.0.9.zip"
 }
