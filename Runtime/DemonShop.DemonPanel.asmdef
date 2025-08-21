@@ -4,19 +4,11 @@
   "references": [
     "UdonSharp"
   ],
-  "includePlatforms": [],
+  "includePlatforms": [
+    "Editor"
+  ],
   "excludePlatforms": [],
   "autoReferenced": true,
   "overrideReferences": false,
-  "noEngineReferences": false,
-  "versionDefines": [
-    {
-      "name": "com.vrchat.worlds",
-      "expression": "3.0.0",
-      "define": "HAVE_VRC_WORLDS"
-    }
-  ],
-  "defineConstraints": [
-    "HAVE_VRC_WORLDS"
-  ]
+  "noEngineReferences": false
 }

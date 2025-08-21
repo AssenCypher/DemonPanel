@@ -1,5 +1,5 @@
 # Changelog
 
-## 1.0.7
-- Correct Unity .meta for all files; compatible with Packages (embedded/VPM) & PackageCache (UPM).
-- Runtime compiled only when com.vrchat.worlds exists.
+## 1.0.8
+- Runtime asmdef is now Editor-only (UdonSharp exists only in Editor), fixing missing UdonSharp errors.
+- Keep proper .meta files for all assets (compatible with VCC/UPM).
