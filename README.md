@@ -31,6 +31,8 @@
 > Want to add another language? PRs welcome! Strings live in <code>Editor/DP_Loc.cs</code>.
 > If you’d like to provide a new translation, please ping us on Discord for authorization — we’ll include credits in README and release notes.
 
+
+- **Current Git URL (UPM) :**：https://github.com/AssenCypher/DemonPanel.git#v1.1.2git
 ---
 
 ## English
