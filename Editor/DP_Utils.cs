@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace DemonShop.Editor
 {
@@ -44,26 +45,77 @@ namespace DemonShop.Editor
         }
 
         // ===== Geometry / Scene =====
+
+        /// <summary>
+        /// 统计所选 Transform 集合的总三角面数；包含所有子级，并对重复 Transform 去重。
+        /// </summary>
         public static int CountTriangles(Transform[] selection)
         {
+            if (selection == null || selection.Length == 0) return 0;
+
+            // 聚合所选及其所有子级，使用 HashSet 去重，避免“既选父又选子”被重复累计
+            var set = new HashSet<Transform>();
+            foreach (var t in selection)
+            {
+                if (!t) continue;
+                foreach (var tr in t.GetComponentsInChildren<Transform>(true))
+                    set.Add(tr);
+            }
+
             int tot = 0;
-            foreach (var t in selection) tot += SafeTriCount(t);
+            foreach (var tr in set) tot += SafeTriCount(tr);
             return tot;
         }
+
+        /// <summary>
+        /// 统计若干根节点（或任意 GameObject）的总三角面数；包含所有子级，并去重。
+        /// </summary>
         public static int CountTriangles(GameObject[] roots)
         {
-            int tot = 0;
+            if (roots == null || roots.Length == 0) return 0;
+
+            var set = new HashSet<Transform>();
             foreach (var r in roots)
+            {
+                if (!r) continue;
                 foreach (var t in r.GetComponentsInChildren<Transform>(true))
-                    tot += SafeTriCount(t);
+                    set.Add(t);
+            }
+
+            int tot = 0;
+            foreach (var t in set) tot += SafeTriCount(t);
             return tot;
         }
+
+        /// <summary>对单个 Transform 统计其自身网格（MeshFilter / SkinnedMeshRenderer）的三角面数。</summary>
         public static int SafeTriCount(Transform t)
         {
             if (!t) return 0;
-            var mf = t.GetComponent<MeshFilter>(); if (mf && mf.sharedMesh) return mf.sharedMesh.triangles.Length/3;
-            var sk = t.GetComponent<SkinnedMeshRenderer>(); if (sk && sk.sharedMesh) return sk.sharedMesh.triangles.Length/3;
+
+            var mf = t.GetComponent<MeshFilter>();
+            if (mf && mf.sharedMesh) return CountMeshTriangles(mf.sharedMesh);
+
+            var sk = t.GetComponent<SkinnedMeshRenderer>();
+            if (sk && sk.sharedMesh) return CountMeshTriangles(sk.sharedMesh);
+
             return 0;
+        }
+
+        /// <summary>按 submesh 读取索引数统计三角面，避免 mesh.triangles 带来的 GC。</summary>
+        private static int CountMeshTriangles(Mesh mesh)
+        {
+            if (!mesh) return 0;
+            int tris = 0;
+            int sm = mesh.subMeshCount;
+            for (int i = 0; i < sm; i++)
+            {
+                // 只在三角拓扑时计数
+                if (mesh.GetTopology(i) == MeshTopology.Triangles)
+                {
+                    tris += (int)mesh.GetIndexCount(i) / 3;
+                }
+            }
+            return tris;
         }
 
         public static Bounds? CollectBounds(Transform[] ts, bool includeRenderers, bool includeColliders)
