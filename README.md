@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/DemonPanel-1.1.3-111?label=version&labelColor=333&logo=unity&logoColor=white" />
+  <img src="https://img.shields.io/badge/DemonPanel-1.1.4-111?label=version&labelColor=333&logo=unity&logoColor=white" />
   <img src="https://img.shields.io/badge/Unity-2022.3-111?logo=unity&logoColor=white" />
   <img src="https://img.shields.io/badge/VRC%20SDK-Worlds%203.x-111" />
   <img src="https://img.shields.io/badge/License-Non--Commercial-111" />
@@ -31,8 +31,6 @@
 > Want to add another language? PRs welcome! Strings live in <code>Editor/DP_Loc.cs</code>.
 > If you’d like to provide a new translation, please ping us on Discord for authorization — we’ll include credits in README and release notes.
 
-
-- **Current Git URL (UPM) :**：https://github.com/AssenCypher/DemonPanel.git#v1.1.3
 ---
 
 ## English
@@ -59,18 +57,18 @@ https://assencypher.github.io/demonshop-vpm-lite/index.json
 
 **VCC (VRChat Creator Companion)**
 1. Settings → Packages → **Add Repository** (paste the URL)
-2. Project → **Manage Packages** → install **DemonPanel 1.X.X(Latest)**
+2. Project → **Manage Packages** → install **DemonPanel 1.1.4**
 3. *(Optional)* Unity **Package Manager → DemonPanel → Samples → Import** (*Area Toggle*)
 
 **ALCOM (vrc-get GUI)**
 1. Settings → Repositories → **Add** (paste the URL)
-2. Project → Manage → install **DemonPanel 1.X.X(Latest)**
+2. Project → Manage → install **DemonPanel 1.1.4**
 3. *(Optional)* Import **Samples** in Unity
 
 **CLI**
 ```bash
 vrc-get repo add https://assencypher.github.io/demonshop-vpm-lite/index.json
-vrc-get install com.demonshop.demonpanel 1.1.3
+vrc-get install com.demonshop.demonpanel 1.1.4
 ```
 
 ### Features (Editor)
@@ -127,14 +125,14 @@ vrc-get install com.demonshop.demonpanel 1.1.3
 https://assencypher.github.io/demonshop-vpm-lite/index.json
 ```
 
-- **VCC**：Settings → Packages → Add Repository → 在项目里安装 **DemonPanel 1.X.X(Latest)**
-- **ALCOM**：设置 → 仓库 → 添加 → 在项目里安装 **1.X.X(Latest)**
+- **VCC**：Settings → Packages → Add Repository → 在项目里安装 **DemonPanel 1.1.4**
+- **ALCOM**：设置 → 仓库 → 添加 → 在项目里安装 **1.1.4**
 - 需要运行时 → Unity **Package Manager → DemonPanel → Samples → Import**
 
 **CLI**
 ```bash
 vrc-get repo add https://assencypher.github.io/demonshop-vpm-lite/index.json
-vrc-get install com.demonshop.demonpanel 1.1.3
+vrc-get install com.demonshop.demonpanel 1.1.4
 ```
 
 ### 功能（编辑器）
@@ -180,14 +178,14 @@ vrc-get install com.demonshop.demonpanel 1.1.3
 https://assencypher.github.io/demonshop-vpm-lite/index.json
 ```
 
-- **VCC**：Settings → Packages → Add Repository → 在專案安裝 **DemonPanel 1.X.X(Latest)**
-- **ALCOM**：設定 → 倉庫 → 新增 → 在專案安裝 **1.X.X(Latest)**
+- **VCC**：Settings → Packages → Add Repository → 在專案安裝 **DemonPanel 1.1.4**
+- **ALCOM**：設定 → 倉庫 → 新增 → 在專案安裝 **1.1.4**
 - 需要執行範例 → Unity **Package Manager → DemonPanel → Samples → Import**
 
 **CLI**
 ```bash
 vrc-get repo add https://assencypher.github.io/demonshop-vpm-lite/index.json
-vrc-get install com.demonshop.demonpanel 1.1.3
+vrc-get install com.demonshop.demonpanel 1.1.4
 ```
 
 ### 功能（編輯器）
@@ -222,7 +220,7 @@ vrc-get install com.demonshop.demonpanel 1.1.3
 https://assencypher.github.io/demonshop-vpm-lite/index.json
 ```
 
-- **VCC / ALCOM** に追加 → **DemonPanel 1.X.X(Latest)** を導入
+- **VCC / ALCOM** に追加 → **DemonPanel 1.1.4** を導入
 - ランタイムが必要なら Unity の **Samples** を Import
 
 **機能**：Probe / Occlusion / LOD / Shader / Bakery / Advisor / Optimizer / Localization（EN/zh-CN/zh-TW/JA）。
@@ -245,6 +243,6 @@ https://assencypher.github.io/demonshop-vpm-lite/index.json
 https://assencypher.github.io/demonshop-vpm-lite/index.json
 ```
 
-VCC/ALCOM 에 리포 추가 후 **DemonPanel 1.1.2** 설치 → 필요 시 Unity **Samples** 에서 *Area Toggle* Import.
+VCC/ALCOM 에 리포 추가 후 **DemonPanel 1.1.4** 설치 → 필요 시 Unity **Samples** 에서 *Area Toggle* Import.
 **라이선스**: 오픈소스, 수정 가능, **상업적 배포 금지**.
 **저자**: **E-Mommy 电子妈咪**, **limbo 新海美冬**.

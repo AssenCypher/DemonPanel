@@ -1,4 +1,6 @@
 # Changelog
+## 1.1.3 - small fix
+- Fixed Script not calculating triangles total when selecting a main gameObject.
 
 ## 1.1.2 — First public release 🎉
 **Hello world.** This is the first officially announced build of **DemonPanel**.
@@ -23,3 +25,8 @@ LOD/script utilities, shader helpers, an advisor, and an optional Udon Area Togg
 ## 1.0.9
 - Moved Udon runtime to **Samples~**. Import sample to Assets to use the Area toggle.
 - Editor tools remain as package assemblies. No UdonSharp dependency at package compile time.
+
+
+##1.1.4
+-Fixed manifest errors
+

@@ -1,7 +1,7 @@
 {
   "name": "com.demonshop.demonpanel",
   "displayName": "DemonPanel",
-  "version": "1.1.2",
+  "version": "1.1.4",
   "description": "Creator-side optimization toolbox for VRChat worlds. Editor utilities (probes, occlusion, shaders, lights/LOD, colliders/scripts). Includes a Udon sample for runtime toggling (import via Package Manager → Samples).",
   "unity": "2022.3",
   "unityRelease": "22f1",
